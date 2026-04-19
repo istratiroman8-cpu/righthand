@@ -1,89 +1,62 @@
-# Roman — Task Manager
+# Roman — Task Manager Pro v2.1
 
-Task manager personale per studio universitario e mediazione creditizia. App web progressiva (PWA), zero server, dati in `localStorage`.
+Task manager PWA standalone per **studenti di sociologia** (Sapienza) e **mediatori creditizi**.
 
----
+## Funzionalità
 
-## Struttura repository
+### Core
+- ✅ Gestione task con categorie: Università, Mediazione Credito, Personale, Urgente
+- 🔄 Drag & Drop manuale (touch + mouse sincronizzato)
+- ⏳ Snooze con countdown live (10/15/20/30 min)
+- 🔍 Ricerca full-text case-insensitive
+- 📊 Filtri per priorità + ordinamento multiplo
+- 📅 Template rapidi (LTV/DSR, Prep Esame, Pomodoro…)
+- 📈 Progress bar e statistiche real-time
 
-```
-/
-├── index.html       ← app principale
-├── manifest.json    ← manifest PWA (installazione su homescreen)
-├── sw.js            ← service worker (offline support)
-├── 404.html         ← redirect per GitHub Pages
-├── _config.yml      ← config GitHub Pages (disabilita Jekyll)
-└── README.md
-```
+### Professional
+- 🧮 **Calcolatore DSR/PTI/LTV** inline per pratiche creditizie
+- 🍅 **Timer Pomodoro** (25 min lavoro + 5 min pausa)
+- 🖨 **Export PDF** task scaduti (stampa nativa)
+- 💾 **Export/Import JSON** con backup automatico ogni 5 min
+- 🔔 Notifiche browser push
 
-> **Nota:** le icone PWA sono opzionali. Se vuoi aggiungerle, crea una cartella `icons/` con `icon-192.png` e `icon-512.png`.
+### Mobile/Desktop Adaptive
+- **Mobile** (≤768px): layout fullscreen, swipe tab, touch-drag
+- **Desktop** (≥1024px): sidebar fissa 280px, grid 2 colonne, keyboard shortcuts
 
----
+### Keyboard Shortcuts (Desktop)
+| Shortcut | Azione |
+|----------|--------|
+| `Ctrl/⌘ + N` | Nuova task |
+| `Ctrl/⌘ + F` | Cerca |
+| `Ctrl/⌘ + Enter` | Salva task (nel modal) |
+| `↑ / ↓` | Naviga task |
+| `Enter` | Apri task selezionata |
+| `Delete` | Elimina task selezionata |
+| `Esc` | Chiudi modal/drawer |
 
-## Deploy su GitHub Pages (5 minuti)
+## Deploy su GitHub Pages
 
-### 1. Crea il repository
+1. Carica tutti i file nella repository
+2. Vai su **Settings → Pages**
+3. Source: `Deploy from branch` → `main` → `/ (root)`
+4. Accedi a `https://<username>.github.io/<repo>/`
 
-Vai su https://github.com/new e crea un repo pubblico, ad esempio `roman-tasks`.
+## File inclusi
 
-### 2. Carica i file
+| File | Descrizione |
+|------|-------------|
+| `index.html` | App principale (standalone) |
+| `sw.js` | Service Worker per offline |
+| `manifest.json` | PWA manifest |
+| `README.md` | Documentazione |
 
-**Via interfaccia web:**
-1. Apri il repo appena creato
-2. Clicca Add file → Upload files
-3. Trascina tutti i file di questa cartella
-4. Clicca Commit changes
+## Persistenza
 
-**Via Git (terminale):**
-```bash
-git init
-git add .
-git commit -m "Initial deploy"
-git branch -M main
-git remote add origin https://github.com/TUO_USERNAME/roman-tasks.git
-git push -u origin main
-```
+- **LocalStorage** `roman-tasks-v3`: dati task
+- **LocalStorage** `roman-order-v3`: ordine drag & drop (Map serializzata)
+- **LocalStorage** `roman-backup-v3`: backup automatico ogni 5 min
 
-### 3. Attiva GitHub Pages
+## Aggiornamento da v2
 
-1. Vai su Settings (tab in alto nel repo)
-2. Sezione Pages nel menu laterale sinistro
-3. Source: seleziona Deploy from a branch
-4. Branch: main / root
-5. Clicca Save
-
-### 4. Accedi all'app
-
-Dopo 1-2 minuti l'app sarà disponibile su:
-```
-https://TUO_USERNAME.github.io/roman-tasks/
-```
-
----
-
-## Installa come app (PWA)
-
-### iOS (Safari)
-1. Apri l'URL in Safari
-2. Tocca il pulsante Condividi
-3. Seleziona Aggiungi a schermata Home
-
-### Android (Chrome)
-1. Apri l'URL in Chrome
-2. Tocca i tre puntini in alto a destra
-3. Seleziona Aggiungi a schermata Home
-
-### Desktop (Chrome/Edge)
-1. Apri l'URL
-2. Clicca sull'icona di installazione nella barra degli indirizzi
-3. Clicca Installa
-
----
-
-## Aggiornare l'app
-
-Modifica index.html, fai commit e push. GitHub Pages si aggiorna automaticamente. Per forzare l'aggiornamento sui dispositivi con app installata, aggiorna il numero di versione in sw.js (CACHE_NAME = 'roman-tasks-v2').
-
----
-
-*Roman Task Manager · Studio & Credito*
+La v2.1 migra automaticamente i dati dalla chiave `roman-tasks-v2` a `roman-tasks-v3`.
