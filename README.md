@@ -1,62 +1,60 @@
-# Roman — Task Manager Pro v2.1
+# Roman — Task Manager Pro v2.2
 
 Task manager PWA standalone per **studenti di sociologia** (Sapienza) e **mediatori creditizi**.
 
-## Funzionalità
+## Changelog v2.2 (20/04/2026)
+- 🐛 **Bug fix critico**: `calcCredit()` — il ternario per il verdetto DSR/PTI era una stringa letterale non eseguita
+- 🐛 **Bug fix**: `taskOrder` Map ora usa chiavi `Number` in modo coerente (lettura, scrittura, import)
+- 🐛 **Bug fix**: `showToast()` firma corretta — callback undo è il 3° argomento, rimosso 4° fantasma
+- 🗑 **Rimossa** progress bar (liberato spazio verticale)
+- ⚙️ **Aggiunta** modale Impostazioni (accessibile da ⚙️ in header, tab menu, drawer, sidebar desktop)
+- 🎨 **Tema chiaro/scuro/auto** — si sincronizza con il sistema in modalità auto
+- 🎨 **Accent color** — 10 colori scelti (Blu, Indigo, Viola, Rosa, Rosso, Arancio, Giallo, Verde, Teal, Grigio)
+- ♻️ Rimossa variabile `renderDebounceTimer` doppia (sostituita da `_renderTimer`)
+- ♻️ Rimossa `isUpcoming` inutilizzata
+- 🔑 Shortcut `Ctrl/⌘+,` apre le impostazioni
 
-### Core
-- ✅ Gestione task con categorie: Università, Mediazione Credito, Personale, Urgente
-- 🔄 Drag & Drop manuale (touch + mouse sincronizzato)
+## Impostazioni
+
+### Tema
+| Opzione | Comportamento |
+|---------|--------------|
+| 🌙 Scuro | Sempre dark |
+| ☀️ Chiaro | Sempre light |
+| ⚙️ Auto | Segue `prefers-color-scheme` del SO |
+
+### Accent Color
+10 colori disponibili: Blu (default), Indigo, Viola, Rosa, Rosso, Arancio, Giallo, Verde, Teal, Grigio.
+Il colore accent si applica a: tab attivi, bordi highlight, tooltip, indicator drag, contatori.
+
+## Funzionalità Core
+- ✅ Task con categorie Università/Credito/Personale/Urgente
+- 🔄 Drag & Drop manuale (touch + mouse)
 - ⏳ Snooze con countdown live (10/15/20/30 min)
-- 🔍 Ricerca full-text case-insensitive
-- 📊 Filtri per priorità + ordinamento multiplo
-- 📅 Template rapidi (LTV/DSR, Prep Esame, Pomodoro…)
-- 📈 Progress bar e statistiche real-time
-
-### Professional
-- 🧮 **Calcolatore DSR/PTI/LTV** inline per pratiche creditizie
-- 🍅 **Timer Pomodoro** (25 min lavoro + 5 min pausa)
-- 🖨 **Export PDF** task scaduti (stampa nativa)
-- 💾 **Export/Import JSON** con backup automatico ogni 5 min
+- 🔍 Ricerca full-text, filtri priorità, sort multiplo
+- 📅 Template rapidi
+- 🧮 Calcolatore DSR/PTI/LTV inline
+- 🍅 Pomodoro 25+5 min
+- 🖨 Stampa PDF scaduti
+- 💾 Export/Import JSON + backup automatico 5 min
 - 🔔 Notifiche browser push
 
-### Mobile/Desktop Adaptive
-- **Mobile** (≤768px): layout fullscreen, swipe tab, touch-drag
-- **Desktop** (≥1024px): sidebar fissa 280px, grid 2 colonne, keyboard shortcuts
-
-### Keyboard Shortcuts (Desktop)
+## Keyboard Shortcuts (Desktop)
 | Shortcut | Azione |
 |----------|--------|
 | `Ctrl/⌘ + N` | Nuova task |
 | `Ctrl/⌘ + F` | Cerca |
+| `Ctrl/⌘ + ,` | Impostazioni |
 | `Ctrl/⌘ + Enter` | Salva task (nel modal) |
 | `↑ / ↓` | Naviga task |
 | `Enter` | Apri task selezionata |
 | `Delete` | Elimina task selezionata |
 | `Esc` | Chiudi modal/drawer |
 
-## Deploy su GitHub Pages
-
-1. Carica tutti i file nella repository
-2. Vai su **Settings → Pages**
-3. Source: `Deploy from branch` → `main` → `/ (root)`
-4. Accedi a `https://<username>.github.io/<repo>/`
-
-## File inclusi
-
+## File da caricare su GitHub Pages
 | File | Descrizione |
 |------|-------------|
-| `index.html` | App principale (standalone) |
-| `sw.js` | Service Worker per offline |
+| `index.html` | App principale |
+| `sw.js` | Service Worker offline |
 | `manifest.json` | PWA manifest |
 | `README.md` | Documentazione |
-
-## Persistenza
-
-- **LocalStorage** `roman-tasks-v3`: dati task
-- **LocalStorage** `roman-order-v3`: ordine drag & drop (Map serializzata)
-- **LocalStorage** `roman-backup-v3`: backup automatico ogni 5 min
-
-## Aggiornamento da v2
-
-La v2.1 migra automaticamente i dati dalla chiave `roman-tasks-v2` a `roman-tasks-v3`.
