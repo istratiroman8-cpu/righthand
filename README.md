@@ -1,60 +1,60 @@
-# Roman — Task Manager Pro v2.2
+# Roman — Task Manager v3.0
 
-Task manager PWA standalone per **studenti di sociologia** (Sapienza) e **mediatori creditizi**.
+PWA standalone per **studenti di sociologia Sapienza** e **mediatori creditizi**.
 
-## Changelog v2.2 (20/04/2026)
-- 🐛 **Bug fix critico**: `calcCredit()` — il ternario per il verdetto DSR/PTI era una stringa letterale non eseguita
-- 🐛 **Bug fix**: `taskOrder` Map ora usa chiavi `Number` in modo coerente (lettura, scrittura, import)
-- 🐛 **Bug fix**: `showToast()` firma corretta — callback undo è il 3° argomento, rimosso 4° fantasma
-- 🗑 **Rimossa** progress bar (liberato spazio verticale)
-- ⚙️ **Aggiunta** modale Impostazioni (accessibile da ⚙️ in header, tab menu, drawer, sidebar desktop)
-- 🎨 **Tema chiaro/scuro/auto** — si sincronizza con il sistema in modalità auto
-- 🎨 **Accent color** — 10 colori scelti (Blu, Indigo, Viola, Rosa, Rosso, Arancio, Giallo, Verde, Teal, Grigio)
-- ♻️ Rimossa variabile `renderDebounceTimer` doppia (sostituita da `_renderTimer`)
-- ♻️ Rimossa `isUpcoming` inutilizzata
-- 🔑 Shortcut `Ctrl/⌘+,` apre le impostazioni
+## Changelog v3.0 (21/04/2026)
+
+### ✨ Nuovo
+- **Navigazione unificata**: Sidebar desktop (72px collassata / 260px espansa) + Bottom nav mobile (5 tab)
+- **Swipe touch** tra sezioni su mobile
+- **Keyboard nav**: `Ctrl+1-5` cambia sezione, `↑↓` naviga task, `Enter` apri, `Delete` elimina
+- **Badge counter** dinamici su ogni tab nav (task pending, scaduti, sessioni pomo)
+- **Sezione Università** dedicata con filtro automatico cat=university
+- **Sezione Mediazione** con calcolatore DSR/PTI/LTV sempre accessibile
+- **Pomodoro Tracker** completo: timer SVG circolare progressivo, 3 modalità (25/5/15 min), audio sintetico (Web Audio API), haptic feedback, contatori sessioni/streak, switch auto tra fasi
+- **Impostazioni dettagliate**: tema dark/light/auto, 10 accent predefiniti + picker HSL custom, toggle notifiche/suoni/vibrazione, auto-delete task completate con slider giorni
+- Material Symbols Rounded per icone (Google Fonts CDN)
+
+### 🐛 Fix mantenuti da v2.2
+- `calcCredit()` ternario corretto
+- `taskOrder` Map con chiavi Number coerenti
+- `showToast()` firma corretta
+
+## Navigazione
+
+| Tab | Desktop (Ctrl+N) | Icona |
+|-----|-----------------|-------|
+| Home | Ctrl+1 | home |
+| Università | Ctrl+2 | school |
+| Mediazione | Ctrl+3 | account_balance |
+| Pomodoro | Ctrl+4 | timer |
+| Impostazioni | Ctrl+5 | settings |
+
+## Pomodoro
+
+Timer circolare SVG con `stroke-dasharray/dashoffset`. Audio: Web Audio API con oscillatore sine a 880Hz (3 beep). Sessioni persistite in `roman-pomo-v3` con contatori oggi/totale/streak.
 
 ## Impostazioni
 
-### Tema
-| Opzione | Comportamento |
-|---------|--------------|
-| 🌙 Scuro | Sempre dark |
-| ☀️ Chiaro | Sempre light |
-| ⚙️ Auto | Segue `prefers-color-scheme` del SO |
+- **Tema**: dark/light/auto (system pref con listener MediaQuery)
+- **Accent**: 10 preset + slider HSL (H 0-360, S 20-100%, L 35-85%) → converti in `--accent-rgb` via `hslToRgb()`
+- **Notifiche**: Notification API con gestione permessi
+- **Suoni**: Web Audio API (AudioContext lazy-init)
+- **Vibrazione**: `navigator.vibrate()`
+- **Auto-delete**: slider 1-30 giorni, esegue su startup e manualmente, usa `task.doneAt` timestamp
 
-### Accent Color
-10 colori disponibili: Blu (default), Indigo, Viola, Rosa, Rosso, Arancio, Giallo, Verde, Teal, Grigio.
-Il colore accent si applica a: tab attivi, bordi highlight, tooltip, indicator drag, contatori.
+## Deploy GitHub Pages
 
-## Funzionalità Core
-- ✅ Task con categorie Università/Credito/Personale/Urgente
-- 🔄 Drag & Drop manuale (touch + mouse)
-- ⏳ Snooze con countdown live (10/15/20/30 min)
-- 🔍 Ricerca full-text, filtri priorità, sort multiplo
-- 📅 Template rapidi
-- 🧮 Calcolatore DSR/PTI/LTV inline
-- 🍅 Pomodoro 25+5 min
-- 🖨 Stampa PDF scaduti
-- 💾 Export/Import JSON + backup automatico 5 min
-- 🔔 Notifiche browser push
+1. Carica tutti i 4 file nella root del repo
+2. Settings → Pages → Deploy from branch → main / (root)
+3. PWA installabile da Chrome (Add to Home Screen / Install)
 
-## Keyboard Shortcuts (Desktop)
-| Shortcut | Azione |
-|----------|--------|
-| `Ctrl/⌘ + N` | Nuova task |
-| `Ctrl/⌘ + F` | Cerca |
-| `Ctrl/⌘ + ,` | Impostazioni |
-| `Ctrl/⌘ + Enter` | Salva task (nel modal) |
-| `↑ / ↓` | Naviga task |
-| `Enter` | Apri task selezionata |
-| `Delete` | Elimina task selezionata |
-| `Esc` | Chiudi modal/drawer |
+## LocalStorage Keys
 
-## File da caricare su GitHub Pages
-| File | Descrizione |
-|------|-------------|
-| `index.html` | App principale |
-| `sw.js` | Service Worker offline |
-| `manifest.json` | PWA manifest |
-| `README.md` | Documentazione |
+| Chiave | Contenuto |
+|--------|-----------|
+| `roman-tasks-v3` | Array task |
+| `roman-order-v3` | Map ordine drag |
+| `roman-pomo-v3` | Statistiche Pomodoro |
+| `roman-cfg-v3` | Impostazioni utente |
+| `roman-bk-v3` | Backup automatico (ogni 5 min) |

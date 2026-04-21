@@ -1,5 +1,5 @@
-// Roman Task Manager — Service Worker v2.1
-const CACHE = 'roman-v2.1';
+// Roman PWA — Service Worker v3.0
+const CACHE = 'roman-v3.0';
 const ASSETS = ['./', './index.html'];
 
 self.addEventListener('install', e => {
@@ -8,21 +8,18 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    ).then(() => self.clients.claim())
+    caches.keys()
+      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
+  if(e.request.method !== 'GET') return;
   e.respondWith(
     caches.match(e.request).then(cached => {
       const fresh = fetch(e.request).then(r => {
-        if (r.ok) {
-          const clone = r.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone));
-        }
+        if(r.ok) { const clone=r.clone(); caches.open(CACHE).then(c=>c.put(e.request,clone)); }
         return r;
       }).catch(() => cached);
       return cached || fresh;
