@@ -1,60 +1,63 @@
-# Roman — Task Manager v3.0
+# Roman — Task Manager v3.1
 
 PWA standalone per **studenti di sociologia Sapienza** e **mediatori creditizi**.
 
-## Changelog v3.0 (21/04/2026)
+## Changelog v3.1 (21/04/2026)
 
-### ✨ Nuovo
-- **Navigazione unificata**: Sidebar desktop (72px collassata / 260px espansa) + Bottom nav mobile (5 tab)
-- **Swipe touch** tra sezioni su mobile
-- **Keyboard nav**: `Ctrl+1-5` cambia sezione, `↑↓` naviga task, `Enter` apri, `Delete` elimina
-- **Badge counter** dinamici su ogni tab nav (task pending, scaduti, sessioni pomo)
-- **Sezione Università** dedicata con filtro automatico cat=university
-- **Sezione Mediazione** con calcolatore DSR/PTI/LTV sempre accessibile
-- **Pomodoro Tracker** completo: timer SVG circolare progressivo, 3 modalità (25/5/15 min), audio sintetico (Web Audio API), haptic feedback, contatori sessioni/streak, switch auto tra fasi
-- **Impostazioni dettagliate**: tema dark/light/auto, 10 accent predefiniti + picker HSL custom, toggle notifiche/suoni/vibrazione, auto-delete task completate con slider giorni
-- Material Symbols Rounded per icone (Google Fonts CDN)
+### 🐛 Bug Fix
+- **Drag & Drop**: `onDragEnd` usava una funzione anonima che non veniva rimossa correttamente da `removeEventListener` → ora usa `onDragUp` come named function, fix completo
+- **Auto-delete**: era basato su giorni e non funzionava. Ora usa **secondi (0-10s)** con slider "Istantaneo / 1-10 sec". Ogni task completata riceve un timer individuale in `autoDelTimers` Map
+- **Auto-delete Undo**: il toast "Annulla" chiama ora `cancelAutoDel(id)` prima di ripristinare la task
+- **Auto-delete animazione**: la card fa fade-out prima di sparire (`fading-out` CSS class)
 
-### 🐛 Fix mantenuti da v2.2
-- `calcCredit()` ternario corretto
-- `taskOrder` Map con chiavi Number coerenti
-- `showToast()` firma corretta
+### 🗂 Navigation Redesign
+- **Bottom nav mobile**: 4 tab (Home / Uni / Medias / Pomo) + **FAB centrale** integrato nella barra → più compatta, nessun tab "Menu" fuori posto
+- **Hamburger ☰ top-left** (mobile): apre un **slide drawer** con tutta la navigazione, sezioni, strumenti e link a Impostazioni. Accessibile anche da swipe-to-close sull'overlay
+- **Desktop sidebar**: invariata, 5 voci con separatore prima di Impostazioni
+
+### 💾 Autosave on Close
+- `visibilitychange` → salva quando la tab passa in background
+- `beforeunload` → salva prima del refresh/chiusura
+- `pagehide` → salva su iOS PWA (che non emette `beforeunload`)
+- Nessun intervallo periodico superfluo — salvataggio reattivo
+
+### Fix minori
+- `swipe` non reagisce più se il drawer è aperto
+- `Ctrl+,` apre Impostazioni
+- `Ctrl+1-4` (non più 5) per le 4 sezioni principali
+- Seed task usa helper locale `d(n)` per date offset invece di `offsetStr` rimosso
 
 ## Navigazione
 
-| Tab | Desktop (Ctrl+N) | Icona |
-|-----|-----------------|-------|
-| Home | Ctrl+1 | home |
-| Università | Ctrl+2 | school |
-| Mediazione | Ctrl+3 | account_balance |
-| Pomodoro | Ctrl+4 | timer |
-| Impostazioni | Ctrl+5 | settings |
+### Mobile
+| Elemento | Posizione | Azione |
+|----------|-----------|--------|
+| ☰ hamburger | Top-left | Apre drawer con tutto |
+| Bottom nav | Fixed bottom | Home / Uni / Medias / Pomo |
+| FAB + | Centro bottom nav | Nuova task |
+| Swipe ← → | Task area | Cambia sezione |
 
-## Pomodoro
+### Desktop
+| Shortcut | Azione |
+|----------|--------|
+| `Ctrl+1` | Home |
+| `Ctrl+2` | Università |
+| `Ctrl+3` | Mediazione |
+| `Ctrl+4` | Pomodoro |
+| `Ctrl+,` | Impostazioni |
+| `Ctrl+N` | Nuova task |
+| `↑↓` | Naviga task |
+| `Enter` | Apri task selezionata |
+| `Delete` | Elimina task selezionata |
 
-Timer circolare SVG con `stroke-dasharray/dashoffset`. Audio: Web Audio API con oscillatore sine a 880Hz (3 beep). Sessioni persistite in `roman-pomo-v3` con contatori oggi/totale/streak.
+## Auto-eliminazione Task Completate
 
-## Impostazioni
-
-- **Tema**: dark/light/auto (system pref con listener MediaQuery)
-- **Accent**: 10 preset + slider HSL (H 0-360, S 20-100%, L 35-85%) → converti in `--accent-rgb` via `hslToRgb()`
-- **Notifiche**: Notification API con gestione permessi
-- **Suoni**: Web Audio API (AudioContext lazy-init)
-- **Vibrazione**: `navigator.vibrate()`
-- **Auto-delete**: slider 1-30 giorni, esegue su startup e manualmente, usa `task.doneAt` timestamp
+Quando attivata (⚙️ → Impostazioni):
+1. Task marcata ✓ → timer `setTimeout` parte
+2. Se 0 sec → eliminazione istantanea
+3. Se 1-10 sec → card fa fade-out CSS, poi sparisce
+4. "Annulla" nel toast → `cancelAutoDel(id)` + ripristino
+5. Se si segna come non-completata → timer cancellato
 
 ## Deploy GitHub Pages
-
-1. Carica tutti i 4 file nella root del repo
-2. Settings → Pages → Deploy from branch → main / (root)
-3. PWA installabile da Chrome (Add to Home Screen / Install)
-
-## LocalStorage Keys
-
-| Chiave | Contenuto |
-|--------|-----------|
-| `roman-tasks-v3` | Array task |
-| `roman-order-v3` | Map ordine drag |
-| `roman-pomo-v3` | Statistiche Pomodoro |
-| `roman-cfg-v3` | Impostazioni utente |
-| `roman-bk-v3` | Backup automatico (ogni 5 min) |
+Carica i 4 file nella root, abilita Pages da Settings → Pages → main / (root).

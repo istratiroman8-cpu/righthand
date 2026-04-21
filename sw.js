@@ -1,5 +1,5 @@
 // Roman PWA — Service Worker v3.0
-const CACHE = 'roman-v3.0';
+const CACHE = 'roman-v3.1';
 const ASSETS = ['./', './index.html'];
 
 self.addEventListener('install', e => {
