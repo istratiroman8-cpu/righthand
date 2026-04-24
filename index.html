@@ -1,4 +1,4 @@
-<!-- Roman PWA v3.1 — 21/04/2026 — bugfix + menu redesign + autosave -->
+<!-- Roman PWA v3.2 — 23/04/2026 — rimossa filter/stats bar, card redesign, bugfix -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -104,7 +104,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .drawer-item-badge.show{display:block}
 .drawer-sep{height:1px;background:var(--border);margin:6px 12px}
 
-/* ══ BOTTOM NAV (mobile) — 4 TAB ══ */
+/* ══ BOTTOM NAV (mobile) ══ */
 #bottom-nav{
   position:fixed;bottom:0;left:0;right:0;
   height:calc(var(--nav-h) + var(--safe-b));padding-bottom:var(--safe-b);
@@ -120,7 +120,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .bnav-item.active::before{width:26px}
 .bnav-badge{position:absolute;top:5px;right:calc(50% - 18px);font-size:8px;background:var(--accent-urgent);color:#fff;border-radius:10px;padding:0 4px;min-width:13px;text-align:center;display:none;font-weight:700}
 .bnav-badge.show{display:block}
-/* FAB in bottom nav centre */
 .bnav-fab{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(var(--accent-rgb),.45);transition:transform .14s,opacity .14s;-webkit-tap-highlight-color:transparent;flex-shrink:0;align-self:center;margin:0 6px}
 .bnav-fab:active{transform:scale(.9)}
 
@@ -146,35 +145,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .desk-fab{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--accent);color:#fff;font-size:26px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(var(--accent-rgb),.45);transition:transform .14s,opacity .14s;z-index:200;-webkit-tap-highlight-color:transparent}
 .desk-fab:active{transform:scale(.9)}
 
-/* ══ SCROLL + TOOLBAR ══ */
+/* ══ TOOLBAR (search + sort) ══ */
 .scroll-area{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
 .scroll-area::-webkit-scrollbar{width:4px}
 .scroll-area::-webkit-scrollbar-track{background:transparent}
 .scroll-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-.stats-row{display:flex;gap:6px;padding:8px 16px;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;scrollbar-width:none}
-.stats-row::-webkit-scrollbar{display:none}
-.stat-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;background:var(--surface);border:1px solid var(--border);border-radius:20px;flex-shrink:0}
-.stat-n{font-family:var(--sans);font-size:14px;font-weight:800}
-.stat-l{font-size:9px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase}
-.toolbar{display:flex;align-items:center;gap:7px;padding:7px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
+.toolbar{display:flex;align-items:center;gap:7px;padding:8px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
 .search-box{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;flex:1;min-width:0;transition:border-color .14s}
 .search-box:focus-within{border-color:var(--text-muted)}
 .search-box input{background:none;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:15px;width:100%}
 .search-box input::placeholder{color:var(--text-muted);font-size:12px}
 .sort-sel{background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);font-size:11px;padding:5px 7px;border-radius:var(--radius-sm);cursor:pointer;outline:none;flex-shrink:0}
-.chip-row{display:flex;gap:5px;padding:6px 14px;border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;scrollbar-width:none;align-items:center}
-.chip-row::-webkit-scrollbar{display:none}
-.chip{padding:3px 10px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--mono);transition:all .13s;white-space:nowrap;flex-shrink:0;-webkit-tap-highlight-color:transparent}
-.chip:hover{color:var(--text-dim);border-color:var(--text-dim)}
-.chip.on{background:var(--surface2);color:var(--text);border-color:var(--text-dim)}
-.chip.ph.on{border-color:rgba(255,107,107,.5);color:var(--accent-urgent);background:rgba(255,107,107,.07)}
-.chip.pm.on{border-color:rgba(244,169,78,.5);color:var(--accent-credit);background:rgba(244,169,78,.07)}
-.chip.pl.on{border-color:var(--text-muted);color:var(--text-dim)}
-.chip-sep{width:1px;height:14px;background:var(--border);margin:0 2px;flex-shrink:0}
-.tpl-strip{display:flex;gap:5px;padding:6px 14px;border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;scrollbar-width:none}
-.tpl-strip::-webkit-scrollbar{display:none}
-.tpl-btn{padding:4px 10px;border:1px dashed var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text-muted);cursor:pointer;background:none;font-family:var(--mono);white-space:nowrap;flex-shrink:0;transition:all .13s;-webkit-tap-highlight-color:transparent}
-.tpl-btn:hover{border-color:var(--text-muted);color:var(--text);background:var(--surface)}
 
 /* ══ TASK AREA ══ */
 .task-area{padding:10px 14px;padding-bottom:calc(var(--nav-h) + 20px + var(--safe-b))}
@@ -185,7 +166,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .group-line{flex:1;height:1px;background:var(--border)}
 
 /* ══ TASK CARD ══ */
-.task-card{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;background:var(--surface);cursor:pointer;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;transition:border-color .14s,transform .14s,box-shadow .14s,opacity .14s,background .2s}
+.task-card{display:flex;align-items:flex-start;gap:8px;padding:11px 12px;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;background:var(--surface);cursor:pointer;position:relative;overflow:hidden;user-select:none;-webkit-user-select:none;transition:border-color .14s,transform .14s,box-shadow .14s,opacity .14s,background .2s}
 @media(min-width:900px){#task-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}.task-group-hdr{grid-column:1/-1}.task-card{margin-bottom:0}}
 .task-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
 .task-card.cat-university::before{background:var(--accent-uni)}
@@ -198,17 +179,29 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .task-card.snoozed{border-color:rgba(192,132,252,.25);background:linear-gradient(135deg,var(--surface),rgba(192,132,252,.04))}
 .task-card.od-glow{border-color:rgba(255,107,107,.4);box-shadow:0 0 10px rgba(255,107,107,.08)}
 .task-card.kb-sel{outline:2px solid var(--accent);outline-offset:1px}
-/* auto-delete fade */
 .task-card.fading-out{opacity:0;transform:scale(.95);transition:opacity .6s ease,transform .6s ease}
 
-.task-check{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .14s;margin-top:2px;background:var(--bg);-webkit-tap-highlight-color:transparent}
+.task-check{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .14s;margin-top:1px;background:var(--bg);-webkit-tap-highlight-color:transparent}
 .task-check:hover{border-color:var(--accent-personal)}
 .task-check.checked{background:var(--accent-personal);border-color:var(--accent-personal)}
 .task-check.checked::after{content:'✓';font-size:10px;color:#fff;font-weight:700}
-.task-body{flex:1;min-width:0}
-.task-title{font-size:13px;color:var(--text);line-height:1.4;word-break:break-word}
-.task-note{font-size:11px;color:var(--text-muted);margin-top:3px;line-height:1.45;word-break:break-word}
-.task-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:5px}
+
+/* Card body layout */
+.task-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+
+/* Row 1: title */
+.task-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.4;word-break:break-word}
+
+/* Row 2: subtitle + label inline */
+.task-sub-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.task-subtitle{font-size:11px;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
+.task-label-tag{font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(128,128,128,.1);color:var(--text-muted);border:1px solid var(--border);letter-spacing:.04em;white-space:nowrap}
+
+/* Row 3: note */
+.task-note{font-size:11px;color:var(--text-muted);line-height:1.45;word-break:break-word}
+
+/* Row 4: meta (cat, date, prio, snooze) */
+.task-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:1px}
 .tag{font-size:9px;padding:2px 6px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;white-space:nowrap}
 .tag-u{background:rgba(108,159,255,.12);color:var(--accent-uni)}
 .tag-c{background:rgba(244,169,78,.12);color:var(--accent-credit)}
@@ -222,17 +215,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .pl{color:var(--text-muted);border-color:var(--border)}
 .snooze-tag{display:inline-flex;align-items:center;gap:3px;font-size:9px;padding:2px 6px;border-radius:4px;background:rgba(192,132,252,.12);color:var(--accent-snooze);border:1px solid rgba(192,132,252,.2);cursor:pointer;transition:background .1s}
 .snooze-tag:hover{background:rgba(192,132,252,.22)}
+
+/* Actions */
 .task-actions{display:flex;gap:3px;opacity:0;transition:opacity .14s;flex-shrink:0;align-items:flex-start}
 .task-card:hover .task-actions{opacity:1}
 @media(hover:none){.task-actions{opacity:1}}
-.act-btn{width:24px;height:24px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .12s;-webkit-tap-highlight-color:transparent}
+.act-btn{width:26px;height:26px;border-radius:6px;background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .12s;-webkit-tap-highlight-color:transparent}
 .act-btn:hover{background:var(--bg);color:var(--text)}
 .act-btn:active{transform:scale(.9)}
 .act-btn.del:hover{background:rgba(255,107,107,.1);color:var(--accent-urgent);border-color:rgba(255,107,107,.3)}
 .act-btn.urg:hover{background:rgba(255,107,107,.1);color:var(--accent-urgent);border-color:rgba(255,107,107,.3)}
 
 /* ══ DRAG ══ */
-.drag-handle{display:flex;align-items:center;justify-content:center;width:16px;flex-shrink:0;color:var(--text-muted);font-size:13px;cursor:grab;opacity:0;transition:opacity .13s;touch-action:none;user-select:none;letter-spacing:-2px}
+.drag-handle{display:flex;align-items:center;justify-content:center;width:16px;flex-shrink:0;color:var(--text-muted);font-size:13px;cursor:grab;opacity:0;transition:opacity .13s;touch-action:none;user-select:none;letter-spacing:-2px;margin-top:1px}
 @media(hover:none){.drag-handle{opacity:.25}}
 .task-card:hover .drag-handle{opacity:.4}
 .drag-handle:hover{opacity:1!important}
@@ -286,6 +281,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opa
 .cat-opt.sel.cat-credit{border-color:var(--accent-credit);color:var(--accent-credit);background:rgba(244,169,78,.06)}
 .cat-opt.sel.cat-personal{border-color:var(--accent-personal);color:var(--accent-personal);background:rgba(126,232,162,.06)}
 .cat-opt.sel.cat-urgent{border-color:var(--accent-urgent);color:var(--accent-urgent);background:rgba(255,107,107,.06)}
+
+/* Template strip nel modal */
+.modal-tpl-strip{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.modal-tpl-btn{padding:4px 9px;border:1px dashed var(--border);border-radius:var(--radius-sm);font-size:10px;color:var(--text-muted);cursor:pointer;background:none;font-family:var(--mono);white-space:nowrap;transition:all .13s;-webkit-tap-highlight-color:transparent}
+.modal-tpl-btn:hover{border-color:var(--text-muted);color:var(--text);background:var(--surface2)}
+
 .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:15px}
 .btn{display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:var(--radius-sm);font-family:var(--mono);font-size:12px;cursor:pointer;border:none;transition:opacity .14s,transform .14s;white-space:nowrap;min-height:36px;-webkit-tap-highlight-color:transparent}
 .btn-p{background:var(--text);color:var(--bg);font-weight:500}
@@ -376,7 +377,6 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   #app-shell{margin-left:0}
   .desk-fab{display:none}
   .form-row{grid-template-columns:1fr}
-  /* header left padding for ham btn */
   .section-header{padding-left:58px}
 }
 @media(min-width:768px){
@@ -389,6 +389,8 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   .modal{padding:12px}.pomo-ring-wrap{width:150px;height:150px}.pomo-time{font-size:30px}
 }
 </style>
+<link rel="manifest" href="manifest.json"/>
+<link rel="apple-touch-icon" href="icon-192.png"/>
 </head>
 <body>
 
@@ -406,55 +408,42 @@ input[type=range]{flex:1;accent-color:var(--accent)}
     <div class="drawer-logo">Roman</div>
     <button class="drawer-close" onclick="closeDrawer()" aria-label="Chiudi menu">✕</button>
   </div>
-
   <div class="drawer-section">
     <div class="drawer-section-lbl">Navigazione</div>
-    <button class="drawer-item active" data-section="home" onclick="goSection('home');closeDrawer()" aria-label="Home">
-      <span class="ms" aria-hidden="true">home</span>
-      <span class="drawer-item-lbl">Home</span>
+    <button class="drawer-item active" data-section="home" onclick="goSection('home');closeDrawer()">
+      <span class="ms">home</span><span class="drawer-item-lbl">Home</span>
       <span class="drawer-item-badge" id="dib-home"></span>
     </button>
-    <button class="drawer-item" data-section="uni" onclick="goSection('uni');closeDrawer()" aria-label="Università">
-      <span class="ms" aria-hidden="true">school</span>
-      <span class="drawer-item-lbl">Università</span>
+    <button class="drawer-item" data-section="uni" onclick="goSection('uni');closeDrawer()">
+      <span class="ms">school</span><span class="drawer-item-lbl">Università</span>
       <span class="drawer-item-badge" id="dib-uni"></span>
     </button>
-    <button class="drawer-item" data-section="credit" onclick="goSection('credit');closeDrawer()" aria-label="Mediazione">
-      <span class="ms" aria-hidden="true">account_balance</span>
-      <span class="drawer-item-lbl">Mediazione</span>
+    <button class="drawer-item" data-section="credit" onclick="goSection('credit');closeDrawer()">
+      <span class="ms">account_balance</span><span class="drawer-item-lbl">Mediazione</span>
       <span class="drawer-item-badge" id="dib-credit"></span>
     </button>
-    <button class="drawer-item" data-section="pomo" onclick="goSection('pomo');closeDrawer()" aria-label="Pomodoro">
-      <span class="ms" aria-hidden="true">timer</span>
-      <span class="drawer-item-lbl">Pomodoro</span>
+    <button class="drawer-item" data-section="pomo" onclick="goSection('pomo');closeDrawer()">
+      <span class="ms">timer</span><span class="drawer-item-lbl">Pomodoro</span>
       <span class="drawer-item-badge" id="dib-pomo"></span>
     </button>
   </div>
-
   <div class="drawer-sep"></div>
-
   <div class="drawer-section">
     <div class="drawer-section-lbl">Strumenti</div>
     <button class="drawer-item" onclick="exportJSON();closeDrawer()">
-      <span class="ms" aria-hidden="true">download</span>
-      <span class="drawer-item-lbl">Esporta JSON</span>
+      <span class="ms">download</span><span class="drawer-item-lbl">Esporta JSON</span>
     </button>
     <button class="drawer-item" onclick="importJSON();closeDrawer()">
-      <span class="ms" aria-hidden="true">upload</span>
-      <span class="drawer-item-lbl">Importa JSON</span>
+      <span class="ms">upload</span><span class="drawer-item-lbl">Importa JSON</span>
     </button>
     <button class="drawer-item" onclick="exportPDF();closeDrawer()">
-      <span class="ms" aria-hidden="true">print</span>
-      <span class="drawer-item-lbl">Stampa scaduti</span>
+      <span class="ms">print</span><span class="drawer-item-lbl">Stampa scaduti</span>
     </button>
   </div>
-
   <div class="drawer-sep"></div>
-
   <div class="drawer-section">
-    <button class="drawer-item" data-section="settings" onclick="goSection('settings');closeDrawer()" aria-label="Impostazioni">
-      <span class="ms" aria-hidden="true">settings</span>
-      <span class="drawer-item-lbl">Impostazioni</span>
+    <button class="drawer-item" data-section="settings" onclick="goSection('settings');closeDrawer()">
+      <span class="ms">settings</span><span class="drawer-item-lbl">Impostazioni</span>
     </button>
   </div>
 </nav>
@@ -465,33 +454,28 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   <div class="sidebar-brand">Roman</div>
   <div class="sidebar-nav">
     <button class="nav-item active" data-section="home" onclick="goSection('home')" aria-label="Home" aria-current="page">
-      <span class="ms" aria-hidden="true">home</span>
-      <span class="nav-label">Home</span>
+      <span class="ms">home</span><span class="nav-label">Home</span>
       <span class="nav-badge" id="nb-home" aria-live="polite"></span>
     </button>
     <button class="nav-item" data-section="uni" onclick="goSection('uni')" aria-label="Università">
-      <span class="ms" aria-hidden="true">school</span>
-      <span class="nav-label">Università</span>
+      <span class="ms">school</span><span class="nav-label">Università</span>
       <span class="nav-badge" id="nb-uni" aria-live="polite"></span>
     </button>
     <button class="nav-item" data-section="credit" onclick="goSection('credit')" aria-label="Mediazione">
-      <span class="ms" aria-hidden="true">account_balance</span>
-      <span class="nav-label">Mediazione</span>
+      <span class="ms">account_balance</span><span class="nav-label">Mediazione</span>
       <span class="nav-badge" id="nb-credit" aria-live="polite"></span>
     </button>
     <button class="nav-item" data-section="pomo" onclick="goSection('pomo')" aria-label="Pomodoro">
-      <span class="ms" aria-hidden="true">timer</span>
-      <span class="nav-label">Pomodoro</span>
+      <span class="ms">timer</span><span class="nav-label">Pomodoro</span>
       <span class="nav-badge" id="nb-pomo" aria-live="polite"></span>
     </button>
     <div class="sidebar-sep"></div>
     <button class="nav-item" data-section="settings" onclick="goSection('settings')" aria-label="Impostazioni">
-      <span class="ms" aria-hidden="true">settings</span>
-      <span class="nav-label">Impostazioni</span>
+      <span class="ms">settings</span><span class="nav-label">Impostazioni</span>
     </button>
   </div>
   <button class="sidebar-expand-btn" onclick="toggleSidebar()" aria-label="Espandi/comprimi menu">
-    <span class="ms" id="expand-icon" aria-hidden="true">chevron_right</span>
+    <span class="ms" id="expand-icon">chevron_right</span>
   </button>
 </nav>
 
@@ -501,22 +485,16 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 <!-- ══ SECTION: HOME ══ -->
 <section class="section active" id="sec-home" aria-label="Tutte le task">
   <header class="section-header">
-    <h1 class="section-title" id="view-title">Tutte le task</h1>
+    <h1 class="section-title">Tutte le task</h1>
     <button class="icon-btn" id="notif-btn" onclick="toggleNotif()" title="Notifiche" aria-label="Notifiche">
-      <span class="ms" style="font-size:18px" aria-hidden="true">notifications</span>
-      <span class="notif-dot" id="notif-dot" aria-hidden="true"></span>
+      <span class="ms" style="font-size:18px">notifications</span>
+      <span class="notif-dot" id="notif-dot"></span>
     </button>
   </header>
-  <div class="stats-row" role="group" aria-label="Statistiche">
-    <div class="stat-pill"><span class="stat-n" id="st-total" style="color:var(--accent)">0</span><span class="stat-l">Tot</span></div>
-    <div class="stat-pill"><span class="stat-n" id="st-today" style="color:var(--accent-credit)">0</span><span class="stat-l">Oggi</span></div>
-    <div class="stat-pill"><span class="stat-n" id="st-done" style="color:var(--accent-personal)">0</span><span class="stat-l">Fatti</span></div>
-    <div class="stat-pill"><span class="stat-n" id="st-od" style="color:var(--accent-urgent)">0</span><span class="stat-l">Scad</span></div>
-  </div>
   <div class="toolbar">
     <div class="search-box" role="search">
-      <span class="ms" style="font-size:17px;color:var(--text-muted)" aria-hidden="true">search</span>
-      <input type="search" id="search-in" placeholder="Cerca…" oninput="debouncedRender()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Cerca task"/>
+      <span class="ms" style="font-size:17px;color:var(--text-muted)">search</span>
+      <input type="search" id="search-in" placeholder="Cerca task…" oninput="debouncedRender()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Cerca task"/>
     </div>
     <select class="sort-sel" id="sort-sel" onchange="renderTasks()" aria-label="Ordinamento">
       <option value="manual">✦ Custom</option>
@@ -526,29 +504,11 @@ input[type=range]{flex:1;accent-color:var(--accent)}
       <option value="created">🕐 Crea.</option>
     </select>
   </div>
-  <div class="chip-row" role="toolbar" aria-label="Filtri">
-    <button class="chip on" data-prio="all" onclick="setFilter('all',this)">Tutte</button>
-    <button class="chip ph" data-prio="high" onclick="setFilter('high',this)">🔴 Alta</button>
-    <button class="chip pm" data-prio="medium" onclick="setFilter('medium',this)">🟡 Media</button>
-    <button class="chip pl" data-prio="low" onclick="setFilter('low',this)">⚪ Bassa</button>
-    <span class="chip-sep" aria-hidden="true"></span>
-    <button class="chip" id="chip-inc" onclick="toggleInc(this)">Da fare</button>
-    <button class="chip" id="chip-od" onclick="toggleOd(this)">Scaduti</button>
-    <button class="chip" id="chip-sn" onclick="toggleSn(this)">Rimandati</button>
-  </div>
-  <div class="tpl-strip" aria-label="Template rapidi">
-    <button class="tpl-btn" onclick="tpl('Preparazione esame','Ripassare schemi, domande tipo, appunti','university','high')">📚 Prep esame</button>
-    <button class="tpl-btn" onclick="tpl('Analisi pratica cliente','DSR / PTI / LTV / merito creditizio','credit','high')">📋 Analisi pratica</button>
-    <button class="tpl-btn" onclick="tpl('Sessione Pomodoro','4 cicli × 25 min','university','medium')">⏱ Pomodoro</button>
-    <button class="tpl-btn" onclick="tpl('Follow-up cliente','Aggiornamento pratica mutuo','credit','medium')">📞 Follow-up</button>
-    <button class="tpl-btn" onclick="tpl('Ricerca accademica','Google Scholar / JSTOR / SocINDEX','university','medium')">🔍 Ricerca</button>
-    <button class="tpl-btn" onclick="tpl('Invio documentazione','CU, buste paga 3 mesi, estratto conto 6 mesi','credit','high')">📤 Docs</button>
-    <button class="tpl-btn" onclick="tpl('Calcoli LTV/DSR','Reddito netto, rate esistenti, LTV perizia','credit','medium')">🧮 LTV/DSR</button>
-    <button class="tpl-btn" onclick="tpl('Workout','','personal','low')">🏋️ Gym</button>
-  </div>
   <div class="scroll-area">
     <div class="task-area">
-      <div class="empty" id="empty-home" style="display:none" aria-live="polite"><span class="ms">task_alt</span><span>Nessuna task in questa vista.</span></div>
+      <div class="empty" id="empty-home" style="display:none" aria-live="polite">
+        <span class="ms">task_alt</span><span>Nessuna task trovata.</span>
+      </div>
       <div id="task-list" role="list"></div>
     </div>
   </div>
@@ -558,11 +518,13 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 <section class="section" id="sec-uni" aria-label="Task Università">
   <header class="section-header">
     <h1 class="section-title">🎓 Università</h1>
-    <button class="icon-btn" onclick="openModal({cat:'university'})" aria-label="Nuova task università"><span class="ms" style="font-size:18px" aria-hidden="true">add</span></button>
+    <button class="icon-btn" onclick="openModal({cat:'university'})" aria-label="Nuova task università">
+      <span class="ms" style="font-size:18px">add</span>
+    </button>
   </header>
   <div class="toolbar">
     <div class="search-box" role="search">
-      <span class="ms" style="font-size:17px;color:var(--text-muted)" aria-hidden="true">search</span>
+      <span class="ms" style="font-size:17px;color:var(--text-muted)">search</span>
       <input type="search" id="search-uni" placeholder="Cerca in Università…" oninput="renderCatSection('university','task-list-uni','empty-uni',this.value)" autocomplete="off" aria-label="Cerca task università"/>
     </div>
   </div>
@@ -579,8 +541,12 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   <header class="section-header">
     <h1 class="section-title">💼 Mediazione</h1>
     <div style="display:flex;gap:6px">
-      <button class="icon-btn" onclick="toggleCalc()" title="Calcolatore DSR/PTI" aria-label="Calcolatore DSR/PTI"><span class="ms" style="font-size:18px" aria-hidden="true">calculate</span></button>
-      <button class="icon-btn" onclick="openModal({cat:'credit'})" aria-label="Nuova task credito"><span class="ms" style="font-size:18px" aria-hidden="true">add</span></button>
+      <button class="icon-btn" onclick="toggleCalc()" title="Calcolatore DSR/PTI" aria-label="Calcolatore DSR/PTI">
+        <span class="ms" style="font-size:18px">calculate</span>
+      </button>
+      <button class="icon-btn" onclick="openModal({cat:'credit'})" aria-label="Nuova task credito">
+        <span class="ms" style="font-size:18px">add</span>
+      </button>
     </div>
   </header>
   <div class="calc-panel" id="calc-panel">
@@ -594,7 +560,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   </div>
   <div class="toolbar">
     <div class="search-box" role="search">
-      <span class="ms" style="font-size:17px;color:var(--text-muted)" aria-hidden="true">search</span>
+      <span class="ms" style="font-size:17px;color:var(--text-muted)">search</span>
       <input type="search" id="search-credit" placeholder="Cerca in Mediazione…" oninput="renderCatSection('credit','task-list-credit','empty-credit',this.value)" autocomplete="off" aria-label="Cerca task mediazione"/>
     </div>
   </div>
@@ -610,37 +576,39 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 <section class="section" id="sec-pomo" aria-label="Pomodoro Timer">
   <header class="section-header">
     <h1 class="section-title">🍅 Pomodoro</h1>
-    <button class="icon-btn" onclick="resetPomo()" title="Reset" aria-label="Reset timer"><span class="ms" style="font-size:18px" aria-hidden="true">restart_alt</span></button>
+    <button class="icon-btn" onclick="resetPomo()" title="Reset" aria-label="Reset timer">
+      <span class="ms" style="font-size:18px">restart_alt</span>
+    </button>
   </header>
   <div class="scroll-area">
-  <div class="pomo-wrap">
-    <div class="pomo-modes" role="group" aria-label="Modalità timer">
-      <button class="pomo-mode-btn active" id="pm-work" onclick="setPomoMode('work')" aria-pressed="true">🍅 Pomodoro 25m</button>
-      <button class="pomo-mode-btn" id="pm-short" onclick="setPomoMode('short')" aria-pressed="false">☕ Pausa 5m</button>
-      <button class="pomo-mode-btn" id="pm-long" onclick="setPomoMode('long')" aria-pressed="false">🛋 Lunga 15m</button>
-    </div>
-    <div class="pomo-ring-wrap" role="img" aria-label="Timer circolare">
-      <svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
-        <circle class="pomo-ring-bg" cx="105" cy="105" r="92"/>
-        <circle class="pomo-ring-fill" id="pomo-ring" cx="105" cy="105" r="92" stroke-dasharray="578.05" stroke-dashoffset="0"/>
-      </svg>
-      <div class="pomo-time-display">
-        <div class="pomo-time" id="pomo-display" aria-live="polite" aria-atomic="true">25:00</div>
-        <div class="pomo-phase-lbl" id="pomo-phase">Lavoro</div>
+    <div class="pomo-wrap">
+      <div class="pomo-modes" role="group" aria-label="Modalità timer">
+        <button class="pomo-mode-btn active" id="pm-work" onclick="setPomoMode('work')" aria-pressed="true">🍅 Pomodoro 25m</button>
+        <button class="pomo-mode-btn" id="pm-short" onclick="setPomoMode('short')" aria-pressed="false">☕ Pausa 5m</button>
+        <button class="pomo-mode-btn" id="pm-long" onclick="setPomoMode('long')" aria-pressed="false">🛋 Lunga 15m</button>
       </div>
+      <div class="pomo-ring-wrap" role="img" aria-label="Timer circolare">
+        <svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+          <circle class="pomo-ring-bg" cx="105" cy="105" r="92"/>
+          <circle class="pomo-ring-fill" id="pomo-ring" cx="105" cy="105" r="92" stroke-dasharray="578.05" stroke-dashoffset="0"/>
+        </svg>
+        <div class="pomo-time-display">
+          <div class="pomo-time" id="pomo-display" aria-live="polite" aria-atomic="true">25:00</div>
+          <div class="pomo-phase-lbl" id="pomo-phase">Lavoro</div>
+        </div>
+      </div>
+      <div class="pomo-controls" role="group" aria-label="Controlli timer">
+        <button class="pomo-ctrl" onclick="prevPomoMode()" aria-label="Modalità precedente"><span class="ms">skip_previous</span></button>
+        <button class="pomo-ctrl primary" id="pomo-play-btn" onclick="togglePomo()" aria-label="Avvia timer"><span class="ms" id="pomo-play-icon">play_arrow</span></button>
+        <button class="pomo-ctrl" onclick="nextPomoMode()" aria-label="Modalità successiva"><span class="ms">skip_next</span></button>
+      </div>
+      <div class="pomo-stats">
+        <div class="pomo-stat"><div class="pomo-stat-n" id="ps-today" aria-live="polite">0</div><div class="pomo-stat-l">Oggi</div></div>
+        <div class="pomo-stat"><div class="pomo-stat-n" id="ps-total">0</div><div class="pomo-stat-l">Totale</div></div>
+        <div class="pomo-stat"><div class="pomo-stat-n" id="ps-streak">0</div><div class="pomo-stat-l">Streak</div></div>
+      </div>
+      <div class="pomo-task-note" id="pomo-active-task" aria-live="polite"></div>
     </div>
-    <div class="pomo-controls" role="group" aria-label="Controlli timer">
-      <button class="pomo-ctrl" onclick="prevPomoMode()" aria-label="Modalità precedente"><span class="ms" aria-hidden="true">skip_previous</span></button>
-      <button class="pomo-ctrl primary" id="pomo-play-btn" onclick="togglePomo()" aria-label="Avvia timer"><span class="ms" id="pomo-play-icon" aria-hidden="true">play_arrow</span></button>
-      <button class="pomo-ctrl" onclick="nextPomoMode()" aria-label="Modalità successiva"><span class="ms" aria-hidden="true">skip_next</span></button>
-    </div>
-    <div class="pomo-stats">
-      <div class="pomo-stat"><div class="pomo-stat-n" id="ps-today" aria-live="polite">0</div><div class="pomo-stat-l">Oggi</div></div>
-      <div class="pomo-stat"><div class="pomo-stat-n" id="ps-total">0</div><div class="pomo-stat-l">Totale</div></div>
-      <div class="pomo-stat"><div class="pomo-stat-n" id="ps-streak">0</div><div class="pomo-stat-l">Streak</div></div>
-    </div>
-    <div class="pomo-task-note" id="pomo-active-task" aria-live="polite"></div>
-  </div>
   </div>
 </section>
 
@@ -648,134 +616,141 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 <section class="section" id="sec-settings" aria-label="Impostazioni">
   <header class="section-header"><h1 class="section-title">⚙️ Impostazioni</h1></header>
   <div class="scroll-area">
-  <div class="settings-body">
+    <div class="settings-body">
 
-    <div class="settings-s">
-      <div class="settings-lbl">Aspetto</div>
-      <div class="theme-grid" role="group" aria-label="Tema">
-        <button class="theme-opt" id="t-dark" onclick="setTheme('dark')" aria-pressed="false"><span class="ms">dark_mode</span>Scuro</button>
-        <button class="theme-opt" id="t-light" onclick="setTheme('light')" aria-pressed="false"><span class="ms">light_mode</span>Chiaro</button>
-        <button class="theme-opt" id="t-auto" onclick="setTheme('auto')" aria-pressed="false"><span class="ms">brightness_auto</span>Auto</button>
-      </div>
-    </div>
-
-    <div class="settings-s">
-      <div class="settings-lbl">Colore Accento</div>
-      <div class="accent-row" id="accent-row" role="group" aria-label="Colori accento"></div>
-      <div class="hsl-picker" aria-label="Selettore HSL personalizzato">
-        <div class="hsl-row"><span class="hsl-lbl">H</span><input type="range" id="hsl-h" min="0" max="360" value="220" oninput="updateHSL()" aria-label="Tonalità"/><span id="hsl-h-v" style="font-size:11px;color:var(--text-muted);min-width:28px">220</span></div>
-        <div class="hsl-row"><span class="hsl-lbl">S</span><input type="range" id="hsl-s" min="20" max="100" value="100" oninput="updateHSL()" aria-label="Saturazione"/><span id="hsl-s-v" style="font-size:11px;color:var(--text-muted);min-width:28px">100%</span></div>
-        <div class="hsl-row"><span class="hsl-lbl">L</span><input type="range" id="hsl-l" min="35" max="85" value="71" oninput="updateHSL()" aria-label="Luminosità"/><span id="hsl-l-v" style="font-size:11px;color:var(--text-muted);min-width:28px">71%</span></div>
-        <div style="display:flex;align-items:center;gap:10px;margin-top:3px">
-          <div id="hsl-preview" style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border);background:var(--accent)"></div>
-          <span style="font-size:11px;color:var(--text-muted)">Trascina per personalizzare</span>
+      <div class="settings-s">
+        <div class="settings-lbl">Aspetto</div>
+        <div class="theme-grid" role="group" aria-label="Tema">
+          <button class="theme-opt" id="t-dark" onclick="setTheme('dark')" aria-pressed="false"><span class="ms">dark_mode</span>Scuro</button>
+          <button class="theme-opt" id="t-light" onclick="setTheme('light')" aria-pressed="false"><span class="ms">light_mode</span>Chiaro</button>
+          <button class="theme-opt" id="t-auto" onclick="setTheme('auto')" aria-pressed="false"><span class="ms">brightness_auto</span>Auto</button>
         </div>
       </div>
-    </div>
 
-    <div class="settings-s">
-      <div class="settings-lbl">Notifiche</div>
-      <div class="settings-row">
-        <div class="settings-row-info"><div class="settings-row-title">Notifiche push</div><div class="settings-row-sub">Promemoria task e Pomodoro</div></div>
-        <label class="toggle" aria-label="Attiva notifiche"><input type="checkbox" id="tog-notif" onchange="handleNotifToggle(this)"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-      </div>
-      <div class="settings-row">
-        <div class="settings-row-info"><div class="settings-row-title">Suoni</div><div class="settings-row-sub">Beep al completamento Pomodoro</div></div>
-        <label class="toggle" aria-label="Attiva suoni"><input type="checkbox" id="tog-sound" onchange="CFG.sound=this.checked;saveCFG()"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-      </div>
-      <div class="settings-row">
-        <div class="settings-row-info"><div class="settings-row-title">Vibrazione</div><div class="settings-row-sub">Haptic feedback su mobile</div></div>
-        <label class="toggle" aria-label="Attiva vibrazione"><input type="checkbox" id="tog-vib" onchange="CFG.vib=this.checked;saveCFG()"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-      </div>
-      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
-        <button class="test-btn" onclick="testNotif()">🔔 Test notifica</button>
-        <button class="test-btn" onclick="testBeep()">🔊 Test beep</button>
-        <button class="test-btn" onclick="testVib()">📳 Test vibra</button>
-      </div>
-    </div>
-
-    <div class="settings-s">
-      <div class="settings-lbl">Auto-eliminazione Task Completate</div>
-      <div class="settings-row">
-        <div class="settings-row-info">
-          <div class="settings-row-title">Attiva auto-eliminazione</div>
-          <div class="settings-row-sub" id="auto-del-sub">Disattivato</div>
+      <div class="settings-s">
+        <div class="settings-lbl">Colore Accento</div>
+        <div class="accent-row" id="accent-row" role="group" aria-label="Colori accento"></div>
+        <div class="hsl-picker" aria-label="Selettore HSL personalizzato">
+          <div class="hsl-row"><span class="hsl-lbl">H</span><input type="range" id="hsl-h" min="0" max="360" value="220" oninput="updateHSL()" aria-label="Tonalità"/><span id="hsl-h-v" style="font-size:11px;color:var(--text-muted);min-width:28px">220</span></div>
+          <div class="hsl-row"><span class="hsl-lbl">S</span><input type="range" id="hsl-s" min="20" max="100" value="100" oninput="updateHSL()" aria-label="Saturazione"/><span id="hsl-s-v" style="font-size:11px;color:var(--text-muted);min-width:28px">100%</span></div>
+          <div class="hsl-row"><span class="hsl-lbl">L</span><input type="range" id="hsl-l" min="35" max="85" value="71" oninput="updateHSL()" aria-label="Luminosità"/><span id="hsl-l-v" style="font-size:11px;color:var(--text-muted);min-width:28px">71%</span></div>
+          <div style="display:flex;align-items:center;gap:10px;margin-top:3px">
+            <div id="hsl-preview" style="width:30px;height:30px;border-radius:50%;border:2px solid var(--border);background:var(--accent)"></div>
+            <span style="font-size:11px;color:var(--text-muted)">Trascina per personalizzare</span>
+          </div>
         </div>
-        <label class="toggle" aria-label="Attiva auto-eliminazione"><input type="checkbox" id="tog-autodel" onchange="handleAutoDelToggle()"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
       </div>
-      <!-- FIX: seconds 0-10 instead of days -->
-      <div class="range-wrap">
-        <span style="font-size:12px;color:var(--text-muted)">Ritardo prima dell'eliminazione:</span>
-        <input type="range" id="autodel-secs" min="0" max="10" value="5" oninput="handleAutoDelSecs()" style="flex:1;accent-color:var(--accent)" aria-label="Secondi auto-eliminazione"/>
-        <span class="range-val" id="autodel-val">5 sec</span>
-      </div>
-      <div style="margin-top:6px;font-size:11px;color:var(--text-muted)">Quando attivato, le task completate scompaiono dopo il ritardo scelto.</div>
-    </div>
 
-    <div class="settings-s">
-      <div class="settings-lbl">Dati</div>
-      <div class="data-btns">
-        <button class="btn btn-g" onclick="exportJSON()">💾 Esporta JSON</button>
-        <button class="btn btn-g" onclick="importJSON()">📥 Importa</button>
-        <button class="btn btn-g" onclick="exportPDF()">🖨 PDF Scaduti</button>
+      <div class="settings-s">
+        <div class="settings-lbl">Notifiche</div>
+        <div class="settings-row">
+          <div class="settings-row-info"><div class="settings-row-title">Notifiche push</div><div class="settings-row-sub">Promemoria task e Pomodoro</div></div>
+          <label class="toggle" aria-label="Attiva notifiche"><input type="checkbox" id="tog-notif" onchange="handleNotifToggle(this)"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-info"><div class="settings-row-title">Suoni</div><div class="settings-row-sub">Beep al completamento Pomodoro</div></div>
+          <label class="toggle" aria-label="Attiva suoni"><input type="checkbox" id="tog-sound" onchange="CFG.sound=this.checked;saveCFG()"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-info"><div class="settings-row-title">Vibrazione</div><div class="settings-row-sub">Haptic feedback su mobile</div></div>
+          <label class="toggle" aria-label="Attiva vibrazione"><input type="checkbox" id="tog-vib" onchange="CFG.vib=this.checked;saveCFG()"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <button class="test-btn" onclick="testNotif()">🔔 Test notifica</button>
+          <button class="test-btn" onclick="testBeep()">🔊 Test beep</button>
+          <button class="test-btn" onclick="testVib()">📳 Test vibra</button>
+        </div>
       </div>
-    </div>
 
-    <div class="settings-s" style="margin-bottom:40px">
-      <div class="settings-lbl">Info</div>
-      <div style="font-size:12px;color:var(--text-muted);line-height:1.7">
-        Roman Task Manager <strong style="color:var(--text)">v3.1</strong><br/>
-        Build: 21/04/2026 · PWA Standalone<br/>
-        Ottimizzato per sociologia Sapienza + mediatori creditizi<br/>
-        <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">Ctrl+1-4</kbd> cambio sezione ·
-        <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">Ctrl+N</kbd> nuova task ·
-        <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">Ctrl+,</kbd> impostazioni
+      <div class="settings-s">
+        <div class="settings-lbl">Auto-eliminazione Task Completate</div>
+        <div class="settings-row">
+          <div class="settings-row-info">
+            <div class="settings-row-title">Attiva auto-eliminazione</div>
+            <div class="settings-row-sub" id="auto-del-sub">Disattivato</div>
+          </div>
+          <label class="toggle" aria-label="Attiva auto-eliminazione"><input type="checkbox" id="tog-autodel" onchange="handleAutoDelToggle()"/><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
+        </div>
+        <div class="range-wrap">
+          <span style="font-size:12px;color:var(--text-muted)">Ritardo prima dell'eliminazione:</span>
+          <input type="range" id="autodel-secs" min="0" max="10" value="5" oninput="handleAutoDelSecs()" style="flex:1;accent-color:var(--accent)" aria-label="Secondi auto-eliminazione"/>
+          <span class="range-val" id="autodel-val">5 sec</span>
+        </div>
+        <div style="margin-top:6px;font-size:11px;color:var(--text-muted)">Quando attivato, le task completate scompaiono dopo il ritardo scelto.</div>
       </div>
-    </div>
 
-  </div>
+      <div class="settings-s">
+        <div class="settings-lbl">Dati</div>
+        <div class="data-btns">
+          <button class="btn btn-g" onclick="exportJSON()">💾 Esporta JSON</button>
+          <button class="btn btn-g" onclick="importJSON()">📥 Importa</button>
+          <button class="btn btn-g" onclick="exportPDF()">🖨 PDF Scaduti</button>
+        </div>
+      </div>
+
+      <div class="settings-s" style="margin-bottom:40px">
+        <div class="settings-lbl">Info</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.7">
+          Roman Task Manager <strong style="color:var(--text)">v3.2</strong><br/>
+          Build: 23/04/2026 · PWA Standalone<br/>
+          Ottimizzato per sociologia Sapienza + mediatori creditizi<br/>
+          <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">Ctrl+1-4</kbd> cambio sezione ·
+          <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">Ctrl+N</kbd> nuova task ·
+          <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:11px">Ctrl+,</kbd> impostazioni
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
 </div><!-- end app-shell -->
 
-<!-- ══ BOTTOM NAV (mobile, 4 tab + FAB) ══ -->
+<!-- ══ BOTTOM NAV (mobile) ══ -->
 <nav id="bottom-nav" role="navigation" aria-label="Navigazione principale">
   <button class="bnav-item active" data-section="home" onclick="goSection('home')" aria-label="Home" aria-current="page">
-    <span class="ms" aria-hidden="true">home</span>
-    <span>Home</span>
+    <span class="ms">home</span><span>Home</span>
     <span class="bnav-badge" id="bnb-home" aria-live="polite"></span>
   </button>
   <button class="bnav-item" data-section="uni" onclick="goSection('uni')" aria-label="Università">
-    <span class="ms" aria-hidden="true">school</span>
-    <span>Uni</span>
+    <span class="ms">school</span><span>Uni</span>
     <span class="bnav-badge" id="bnb-uni" aria-live="polite"></span>
   </button>
-  <!-- FAB al centro -->
   <button class="bnav-fab" onclick="openModal()" aria-label="Nuova task">
-    <span class="ms" style="font-size:26px" aria-hidden="true">add</span>
+    <span class="ms" style="font-size:26px">add</span>
   </button>
   <button class="bnav-item" data-section="credit" onclick="goSection('credit')" aria-label="Mediazione">
-    <span class="ms" aria-hidden="true">account_balance</span>
-    <span>Medias</span>
+    <span class="ms">account_balance</span><span>Medias</span>
     <span class="bnav-badge" id="bnb-credit" aria-live="polite"></span>
   </button>
   <button class="bnav-item" data-section="pomo" onclick="goSection('pomo')" aria-label="Pomodoro">
-    <span class="ms" aria-hidden="true">timer</span>
-    <span>Pomo</span>
+    <span class="ms">timer</span><span>Pomo</span>
     <span class="bnav-badge" id="bnb-pomo" aria-live="polite"></span>
   </button>
 </nav>
 
 <!-- Desktop FAB -->
 <button class="desk-fab" id="desk-fab" onclick="openModal()" aria-label="Nuova task" title="Nuova task (Ctrl+N)">
-  <span class="ms" style="font-size:28px" aria-hidden="true">add</span>
+  <span class="ms" style="font-size:28px">add</span>
 </button>
 
 <!-- ══ MODAL TASK ══ -->
 <div class="modal-ov" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-h">
   <div class="modal">
     <h2 class="modal-title" id="modal-h">Nuova Task</h2>
+
+    <!-- Template rapidi nel modal -->
+    <div class="modal-tpl-strip" id="tpl-strip-modal">
+      <button class="modal-tpl-btn" onclick="tpl('Preparazione esame','Ripassare schemi, domande tipo, appunti','university','high')">📚 Prep esame</button>
+      <button class="modal-tpl-btn" onclick="tpl('Analisi pratica cliente','DSR / PTI / LTV / merito creditizio','credit','high')">📋 Analisi pratica</button>
+      <button class="modal-tpl-btn" onclick="tpl('Sessione Pomodoro','4 cicli × 25 min','university','medium')">⏱ Pomodoro</button>
+      <button class="modal-tpl-btn" onclick="tpl('Follow-up cliente','Aggiornamento pratica mutuo','credit','medium')">📞 Follow-up</button>
+      <button class="modal-tpl-btn" onclick="tpl('Ricerca accademica','Google Scholar / JSTOR / SocINDEX','university','medium')">🔍 Ricerca</button>
+      <button class="modal-tpl-btn" onclick="tpl('Invio documentazione','CU, buste paga 3 mesi, estratto conto 6 mesi','credit','high')">📤 Docs</button>
+      <button class="modal-tpl-btn" onclick="tpl('Calcoli LTV/DSR','Reddito netto, rate esistenti, LTV perizia','credit','medium')">🧮 LTV/DSR</button>
+      <button class="modal-tpl-btn" onclick="tpl('Workout','','personal','low')">🏋️ Gym</button>
+    </div>
+
     <div class="form-grp"><label class="form-lbl" for="f-title">Titolo *</label><input class="fi" type="text" id="f-title" placeholder="es. Studiare Bourdieu cap. 4…" autocomplete="off" autocorrect="off"/></div>
     <div class="form-grp">
       <label class="form-lbl">Categoria</label>
@@ -810,30 +785,30 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 'use strict';
 
 /* ══ HELPERS ══ */
-const $ = id => document.getElementById(id);
-const pad2 = n => String(n).padStart(2,'0');
-const todayStr = () => { const d=new Date(); return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; };
-const fmtDate = s => { if(!s) return ''; const p=s.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; };
-const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-const sanitize = s => String(s??'').trim().slice(0,500);
+const $=id=>document.getElementById(id);
+const pad2=n=>String(n).padStart(2,'0');
+const todayStr=()=>{const d=new Date();return`${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;};
+const fmtDate=s=>{if(!s)return'';const p=s.split('-');return`${p[2]}/${p[1]}/${p[0]}`;};
+const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+const sanitize=s=>String(s??'').trim().slice(0,500);
 
 /* ══ CONFIG ══ */
-const CFG = JSON.parse(localStorage.getItem('roman-cfg-v3') || '{}');
-const DEF = {theme:'dark',accentIdx:0,accentH:220,accentS:100,accentL:71,sound:true,vib:true,notif:false,autoDelOn:false,autoDelSecs:5};
-Object.keys(DEF).forEach(k => { if(!(k in CFG)) CFG[k]=DEF[k]; });
-const saveCFG = () => localStorage.setItem('roman-cfg-v3', JSON.stringify(CFG));
+const CFG=JSON.parse(localStorage.getItem('roman-cfg-v3')||'{}');
+const DEF={theme:'dark',accentIdx:0,accentH:220,accentS:100,accentL:71,sound:true,vib:true,notif:false,autoDelOn:false,autoDelSecs:5};
+Object.keys(DEF).forEach(k=>{if(!(k in CFG))CFG[k]=DEF[k];});
+const saveCFG=()=>localStorage.setItem('roman-cfg-v3',JSON.stringify(CFG));
 
-const ACCENTS = [
-  {name:'Blu',     val:'#6c9fff',h:220,s:100,l:71},
-  {name:'Indigo',  val:'#818cf8',h:234,s:89, l:74},
-  {name:'Viola',   val:'#c084fc',h:280,s:92, l:75},
-  {name:'Rosa',    val:'#f472b6',h:328,s:86, l:70},
-  {name:'Rosso',   val:'#ff6b6b',h:0,  s:100,l:71},
-  {name:'Arancio', val:'#f97316',h:25, s:95, l:52},
-  {name:'Giallo',  val:'#eab308',h:45, s:93, l:47},
-  {name:'Verde',   val:'#7ee8a2',h:142,s:70, l:70},
-  {name:'Teal',    val:'#2dd4bf',h:173,s:68, l:50},
-  {name:'Grigio',  val:'#94a3b8',h:215,s:20, l:65},
+const ACCENTS=[
+  {name:'Blu',    val:'#6c9fff',h:220,s:100,l:71},
+  {name:'Indigo', val:'#818cf8',h:234,s:89, l:74},
+  {name:'Viola',  val:'#c084fc',h:280,s:92, l:75},
+  {name:'Rosa',   val:'#f472b6',h:328,s:86, l:70},
+  {name:'Rosso',  val:'#ff6b6b',h:0,  s:100,l:71},
+  {name:'Arancio',val:'#f97316',h:25, s:95, l:52},
+  {name:'Giallo', val:'#eab308',h:45, s:93, l:47},
+  {name:'Verde',  val:'#7ee8a2',h:142,s:70, l:70},
+  {name:'Teal',   val:'#2dd4bf',h:173,s:68, l:50},
+  {name:'Grigio', val:'#94a3b8',h:215,s:20, l:65},
 ];
 
 function applyTheme(pref=CFG.theme){
@@ -843,12 +818,12 @@ function applyTheme(pref=CFG.theme){
 }
 function hslToRgb(h,s,l){
   let r,g,b;
-  if(s===0){r=g=b=l}else{
+  if(s===0){r=g=b=l;}else{
     const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;
-    const h2=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p};
+    const h2=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};
     r=h2(p,q,h+1/3);g=h2(p,q,h);b=h2(p,q,h-1/3);
   }
-  return [Math.round(r*255),Math.round(g*255),Math.round(b*255)];
+  return[Math.round(r*255),Math.round(g*255),Math.round(b*255)];
 }
 function applyAccent(h=CFG.accentH,s=CFG.accentS,l=CFG.accentL){
   const root=document.documentElement;
@@ -857,32 +832,23 @@ function applyAccent(h=CFG.accentH,s=CFG.accentS,l=CFG.accentL){
 }
 
 /* ══ TASK STATE ══ */
-let tasks=(()=>{
-  return JSON.parse(localStorage.getItem('roman-tasks-v3')||localStorage.getItem('roman-tasks-v2')||'null')||[];
-})();
+let tasks=(()=>JSON.parse(localStorage.getItem('roman-tasks-v3')||localStorage.getItem('roman-tasks-v2')||'null')||[])();
 let taskOrder=new Map(Object.entries(JSON.parse(localStorage.getItem('roman-order-v3')||'{}')).map(([k,v])=>[Number(k),v]));
 const snoozeMap=new Map();
-// auto-delete pending timers: Map<taskId, timeoutId>
 const autoDelTimers=new Map();
-let currentFilter='all',filterInc=false,filterOd=false,filterSn=false;
 let editingId=null,activeCat='university';
 let notifEnabled=CFG.notif;
 let kbIdx=-1,_rt=null;
 
-const CAT_LABELS={university:'🎓 Università',credit:'💼 Credito',personal:'🏠 Personale',urgent:'🔥 Urgente'};
+const CAT_LABELS={university:'🎓 Uni',credit:'💼 Credito',personal:'🏠 Personal',urgent:'🔥 Urgente'};
+const CAT_LABELS_FULL={university:'🎓 Università',credit:'💼 Credito',personal:'🏠 Personale',urgent:'🔥 Urgente'};
 const isToday=t=>t.date===todayStr();
 const isOverdue=t=>!t.done&&!!t.date&&t.date<todayStr();
 const isSnoozed=t=>snoozeMap.has(t.id);
 
 /* ══ PERSIST ══ */
-const save=()=>{
-  localStorage.setItem('roman-tasks-v3',JSON.stringify(tasks));
-  localStorage.removeItem('roman-tasks-v2');
-};
-const saveOrder=()=>{
-  const o={};taskOrder.forEach((v,k)=>o[k]=v);
-  localStorage.setItem('roman-order-v3',JSON.stringify(o));
-};
+const save=()=>{localStorage.setItem('roman-tasks-v3',JSON.stringify(tasks));localStorage.removeItem('roman-tasks-v2');};
+const saveOrder=()=>{const o={};taskOrder.forEach((v,k)=>o[k]=v);localStorage.setItem('roman-order-v3',JSON.stringify(o));};
 function syncOrder(){
   const ids=tasks.map(t=>t.id);
   taskOrder.forEach((_,k)=>{if(!ids.includes(k))taskOrder.delete(k);});
@@ -898,53 +864,30 @@ function moveTaskBefore(dragId,targetId){
 }
 function moveToEnd(id){let max=0;taskOrder.forEach(v=>{if(v>max)max=v;});taskOrder.set(id,max+1);saveOrder();}
 
-/* ══ SAVE ON CLOSE / VISIBILITY ══ */
-// FIX: save on every visibility hide + beforeunload
-document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState==='hidden'){
-    save(); saveOrder();
-    localStorage.setItem('roman-bk-v3',JSON.stringify({tasks,ts:Date.now()}));
-  }
-});
-window.addEventListener('beforeunload',()=>{
-  save(); saveOrder();
-});
-window.addEventListener('pagehide',()=>{
-  save(); saveOrder();
-});
+/* ══ SAVE ON CLOSE ══ */
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();saveOrder();localStorage.setItem('roman-bk-v3',JSON.stringify({tasks,ts:Date.now()}));}});
+window.addEventListener('beforeunload',()=>{save();saveOrder();});
+window.addEventListener('pagehide',()=>{save();saveOrder();});
 
-/* ══ AUTO-DELETE ══
-   FIX: uses seconds (0-10s), triggered immediately when task is marked done.
-   A per-task timer in autoDelTimers map handles the async removal.
-   Undo cancels the timer. ══ */
+/* ══ AUTO-DELETE ══ */
 function scheduleAutoDel(taskId){
-  if(!CFG.autoDelOn) return;
+  if(!CFG.autoDelOn)return;
   const secs=CFG.autoDelSecs;
-  if(secs===0){
-    // immediate
-    performAutoDel(taskId);
-    return;
-  }
-  const tid=setTimeout(()=>performAutoDel(taskId), secs*1000);
+  if(secs===0){performAutoDel(taskId);return;}
+  const tid=setTimeout(()=>performAutoDel(taskId),secs*1000);
   autoDelTimers.set(taskId,tid);
 }
 function cancelAutoDel(taskId){
-  if(autoDelTimers.has(taskId)){
-    clearTimeout(autoDelTimers.get(taskId));
-    autoDelTimers.delete(taskId);
-  }
-  // remove fading class if present
+  if(autoDelTimers.has(taskId)){clearTimeout(autoDelTimers.get(taskId));autoDelTimers.delete(taskId);}
   const card=document.querySelector(`[data-id="${taskId}"]`);
-  if(card) card.classList.remove('fading-out');
+  if(card)card.classList.remove('fading-out');
 }
 function performAutoDel(taskId){
   autoDelTimers.delete(taskId);
   const idx=tasks.findIndex(x=>x.id===taskId&&x.done);
-  if(idx===-1) return; // already deleted or un-done
-  tasks.splice(idx,1);
-  taskOrder.delete(taskId);
-  snoozeMap.delete(taskId);
-  save(); saveOrder(); renderActive();
+  if(idx===-1)return;
+  tasks.splice(idx,1);taskOrder.delete(taskId);snoozeMap.delete(taskId);
+  save();saveOrder();renderActive();
 }
 
 /* ══ SECTION NAV ══ */
@@ -953,31 +896,16 @@ function goSection(name){
   currentSection=name;
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   const sec=$('sec-'+name);if(sec)sec.classList.add('active');
-  // sidebar nav-items
-  document.querySelectorAll('.nav-item').forEach(el=>{
-    const a=el.dataset.section===name;
-    el.classList.toggle('active',a);
-    el.setAttribute('aria-current',a?'page':'false');
-  });
-  // bottom nav items
-  document.querySelectorAll('.bnav-item').forEach(el=>{
-    const a=el.dataset.section===name;
-    el.classList.toggle('active',a);
-    el.setAttribute('aria-current',a?'page':'false');
-  });
-  // drawer items
-  document.querySelectorAll('.drawer-item[data-section]').forEach(el=>{
-    el.classList.toggle('active',el.dataset.section===name);
-  });
-  // Desktop FAB visibility
+  document.querySelectorAll('.nav-item').forEach(el=>{const a=el.dataset.section===name;el.classList.toggle('active',a);el.setAttribute('aria-current',a?'page':'false');});
+  document.querySelectorAll('.bnav-item').forEach(el=>{const a=el.dataset.section===name;el.classList.toggle('active',a);el.setAttribute('aria-current',a?'page':'false');});
+  document.querySelectorAll('.drawer-item[data-section]').forEach(el=>el.classList.toggle('active',el.dataset.section===name));
   const deskFab=$('desk-fab');
-  if(deskFab) deskFab.style.display=['home','uni','credit'].includes(name)?'':'none';
-  // section hooks
-  if(name==='uni') renderCatSection('university','task-list-uni','empty-uni','');
-  if(name==='credit') renderCatSection('credit','task-list-credit','empty-credit','');
+  if(deskFab)deskFab.style.display=['home','uni','credit'].includes(name)?'':'none';
+  if(name==='uni')renderCatSection('university','task-list-uni','empty-uni','');
+  if(name==='credit')renderCatSection('credit','task-list-credit','empty-credit','');
   if(name==='pomo'){updatePomoDisplay();renderPomoStats();}
-  if(name==='settings') renderSettingsUI();
-  if(name==='home') renderTasks();
+  if(name==='settings')renderSettingsUI();
+  if(name==='home')renderTasks();
 }
 
 /* ══ SIDEBAR EXPAND ══ */
@@ -987,17 +915,9 @@ function toggleSidebar(){
   $('expand-icon').textContent=exp?'chevron_left':'chevron_right';
 }
 
-/* ══ DRAWER (mobile) ══ */
-function openDrawer(){
-  $('drawer').classList.add('open');
-  $('drawer-ov').classList.add('open');
-  $('ham-btn').setAttribute('aria-expanded','true');
-}
-function closeDrawer(){
-  $('drawer').classList.remove('open');
-  $('drawer-ov').classList.remove('open');
-  $('ham-btn').setAttribute('aria-expanded','false');
-}
+/* ══ DRAWER ══ */
+function openDrawer(){$('drawer').classList.add('open');$('drawer-ov').classList.add('open');$('ham-btn').setAttribute('aria-expanded','true');}
+function closeDrawer(){$('drawer').classList.remove('open');$('drawer-ov').classList.remove('open');$('ham-btn').setAttribute('aria-expanded','false');}
 
 /* ══ BADGES ══ */
 function updateBadges(){
@@ -1015,17 +935,18 @@ function updateBadges(){
   sets.forEach(([sid,bid,did,n])=>{
     [sid,bid,did].forEach(id=>{const el=$(id);if(!el)return;el.textContent=n||'';el.classList.toggle('show',n>0);});
   });
+  // overdue indicator nel pulsante notifiche
+  const odCnt=tasks.filter(isOverdue).length;
+  const nd=$('notif-dot'),nb=$('notif-btn');
+  if(nd)nd.style.display=odCnt>0?'block':'none';
+  if(nb)nb.classList.toggle('active-alert',odCnt>0);
 }
 
 /* ══ FILTER/SORT ══ */
 function getFiltered(){
   let t=[...tasks];
-  if(filterOd) t=t.filter(isOverdue);
-  else if(filterSn) t=t.filter(isSnoozed);
-  if(currentFilter!=='all') t=t.filter(x=>x.priority===currentFilter);
-  if(filterInc) t=t.filter(x=>!x.done);
   const q=($('search-in')?.value||'').toLowerCase().trim();
-  if(q) t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q)));
+  if(q)t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q)));
   const sort=$('sort-sel')?.value||'manual';
   const pR={high:0,medium:1,low:2};
   switch(sort){
@@ -1036,90 +957,94 @@ function getFiltered(){
     default:         return t.sort((a,b)=>b.id-a.id);
   }
 }
-function setFilter(p,el){currentFilter=p;document.querySelectorAll('.chip[data-prio]').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderTasks();}
-function toggleInc(el){filterInc=!filterInc;el.classList.toggle('on',filterInc);renderTasks();}
-function toggleOd(el){filterOd=!filterOd;if(filterOd)filterSn=false;$('chip-sn').classList.remove('on');el.classList.toggle('on',filterOd);renderTasks();}
-function toggleSn(el){filterSn=!filterSn;if(filterSn)filterOd=false;$('chip-od').classList.remove('on');el.classList.toggle('on',filterSn);renderTasks();}
 const debouncedRender=()=>{clearTimeout(_rt);_rt=setTimeout(renderTasks,100);};
 
 /* ══ RENDER ══ */
 function renderTasks(){
   const list=$('task-list'),emptyEl=$('empty-home');
   const filtered=getFiltered();
-  const total=tasks.length,done=tasks.filter(x=>x.done).length;
-  const todayCnt=tasks.filter(isToday).length,odCnt=tasks.filter(isOverdue).length;
-  $('st-total').textContent=total;$('st-today').textContent=todayCnt;
-  $('st-done').textContent=done;$('st-od').textContent=odCnt;
-  $('notif-dot').style.display=odCnt>0?'block':'none';
-  $('notif-btn').classList.toggle('active-alert',odCnt>0);
-  if(!filtered.length){list.innerHTML='';emptyEl.style.display='flex';updateBadges();return;}
+  updateBadges();
+  if(!filtered.length){list.innerHTML='';emptyEl.style.display='flex';return;}
   emptyEl.style.display='none';
   const pending=filtered.filter(x=>!x.done),completed=filtered.filter(x=>x.done);
   let html='';
   if(pending.length)   html+=renderGroup('Da completare',pending);
   if(completed.length) html+=renderGroup('Completati',completed);
   list.innerHTML=html;
-  attachDrag();updateBadges();
+  attachDrag();
 }
 function renderCatSection(cat,listId,emptyId,q){
   let t=tasks.filter(x=>x.cat===cat);
-  if(q) t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q.toLowerCase())));
+  if(q)t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q.toLowerCase())));
   const list=$(listId),emptyEl=$(emptyId);
   if(!t.length){list.innerHTML='';emptyEl.style.display='flex';return;}
   emptyEl.style.display='none';
   const pending=t.filter(x=>!x.done),done=t.filter(x=>x.done);
   let html='';
-  if(pending.length) html+=renderGroup('Da completare',applyOrder(pending));
-  if(done.length) html+=renderGroup('Completati',applyOrder(done));
+  if(pending.length)html+=renderGroup('Da completare',applyOrder(pending));
+  if(done.length)html+=renderGroup('Completati',applyOrder(done));
   list.innerHTML=html;attachDrag();
 }
 function renderGroup(label,arr){
   return`<div class="task-group-hdr" role="rowgroup"><span class="group-lbl">${label} (${arr.length})</span><div class="group-line" aria-hidden="true"></div></div>`+arr.map(renderCard).join('');
 }
+
+/* ══ CARD RENDER — layout riprogettato ══ */
 function renderCard(t){
   const od=isOverdue(t),sn=isSnoozed(t);
   const pCls={high:'ph',medium:'pm',low:'pl'}[t.priority]||'pl';
-  const pLbl={high:'Alta',medium:'Media',low:'Bassa'}[t.priority]||'';
+  const pLbl={high:'🔴 Alta',medium:'🟡 Media',low:'⚪ Bassa'}[t.priority]||'';
   const tagCls={university:'tag-u',credit:'tag-c',personal:'tag-p',urgent:'tag-urg'}[t.cat]||'';
-  const dateStr=t.date?`<span class="task-date${od?' od':''}">📅 ${fmtDate(t.date)}${t.time?' '+t.time:''}${od?' · SCADUTO':''}</span>`:'';
+
+  // Row 2: subtitle + label
+    const subRow=(t.subtitle||t.label)?('<div class="task-sub-row">'+(t.subtitle?'<span class="task-subtitle">'+esc(t.subtitle)+'</span>':'')+(t.subtitle&&t.label?'<span style="color:var(--text-muted);font-size:10px"> · </span>':'')+(t.label?'<span class="task-label-tag">'+esc(t.label)+'</span>':'')+'</div>'):'';
+
+  // Row 3: note (max 90 chars)
+  const noteHtml=t.note?`<div class="task-note">${esc(t.note.length>90?t.note.slice(0,90)+'…':t.note)}</div>`:'';
+
+  // Row 4: meta
+  const dateStr=t.date?`<span class="task-date${od?' od':''}">📅 ${fmtDate(t.date)}${t.time?' '+t.time:''}${od?' ⚠':''}</span>`:'';
   const snBadge=sn?`<span class="snooze-tag" onclick="event.stopPropagation();clearSnooze(${t.id},event)">⏳ <span class="sn-cd" data-id="${t.id}">${fmtCountdown(t.id)}</span> ×</span>`:'';
-  const noteHtml=t.note?`<div class="task-note">${esc(t.note.length>100?t.note.slice(0,100)+'…':t.note)}</div>`:'';
+
   const cancelOpt=sn?`<button class="sn-opt cancel" onclick="clearSnooze(${t.id},event)">× Annulla rimando</button>`:'';
   const urgEmoji=t.cat==='urgent'?'🔥':'⚡';
+
   return`<div class="task-card cat-${t.cat}${t.done?' done':''}${sn?' snoozed':''}${od?' od-glow':''}" data-id="${t.id}" onclick="openEdit(${t.id})" role="listitem" tabindex="0" onkeydown="if(event.key==='Enter')openEdit(${t.id})">
-    <div class="drag-handle" aria-hidden="true">⋮⋮</div>
-    <div class="task-check${t.done?' checked':''}" onclick="event.stopPropagation();toggleDone(${t.id})" role="checkbox" aria-checked="${t.done}" aria-label="Completa task" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation();toggleDone(${t.id});}"></div>
-    <div class="task-body">
-      <div class="task-title">${esc(t.title)}</div>
-      ${noteHtml}
-      <div class="task-meta">
-        <span class="tag ${tagCls}">${CAT_LABELS[t.cat]||t.cat}</span>
-        ${t.label?`<span class="tag" style="background:rgba(128,128,128,.1);color:var(--text-muted)">${esc(t.label)}</span>`:''}
-        ${t.subtitle?`<span style="font-size:10px;color:var(--text-muted)">${esc(t.subtitle)}</span>`:''}
-        ${dateStr}<span class="prio-badge ${pCls}">${pLbl}</span>${snBadge}
+  <div class="drag-handle" aria-hidden="true">⋮⋮</div>
+  <div class="task-check${t.done?' checked':''}" onclick="event.stopPropagation();toggleDone(${t.id})" role="checkbox" aria-checked="${t.done}" aria-label="Completa task" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.stopPropagation();toggleDone(${t.id});}"></div>
+  <div class="task-body">
+    <div class="task-title">${esc(t.title)}</div>
+    ${subRow}
+    ${noteHtml}
+    <div class="task-meta">
+      <span class="tag ${tagCls}">${CAT_LABELS[t.cat]||t.cat}</span>
+      <span class="prio-badge ${pCls}">${pLbl}</span>
+      ${dateStr}
+      ${snBadge}
+    </div>
+  </div>
+  <div class="task-actions">
+    <div class="snooze-wrap">
+      <button class="act-btn" title="Rimanda" onclick="toggleSnMenu(${t.id},event)" aria-haspopup="true" aria-label="Rimanda">⏳</button>
+      <div class="snooze-menu" id="sm-${t.id}" role="menu">
+        <button class="sn-opt" onclick="snooze(${t.id},10,event)">⏱ +10 min</button>
+        <button class="sn-opt" onclick="snooze(${t.id},15,event)">⏱ +15 min</button>
+        <button class="sn-opt" onclick="snooze(${t.id},30,event)">⏱ +30 min</button>
+        <button class="sn-opt" onclick="snooze(${t.id},60,event)">⏱ +1 ora</button>
+        ${cancelOpt}
       </div>
     </div>
-    <div class="task-actions">
-      <div class="snooze-wrap">
-        <button class="act-btn" title="Rimanda" onclick="toggleSnMenu(${t.id},event)" aria-haspopup="true" aria-label="Rimanda">⏳</button>
-        <div class="snooze-menu" id="sm-${t.id}" role="menu">
-          <button class="sn-opt" onclick="snooze(${t.id},10,event)">⏱ +10 min</button>
-          <button class="sn-opt" onclick="snooze(${t.id},15,event)">⏱ +15 min</button>
-          <button class="sn-opt" onclick="snooze(${t.id},30,event)">⏱ +30 min</button>
-          <button class="sn-opt" onclick="snooze(${t.id},60,event)">⏱ +1 ora</button>
-          ${cancelOpt}
-        </div>
-      </div>
-      <button class="act-btn urg" onclick="event.stopPropagation();toggleUrgent(${t.id})" aria-label="Urgente">${urgEmoji}</button>
-      <button class="act-btn" onclick="event.stopPropagation();openEdit(${t.id})" aria-label="Modifica">✎</button>
-      <button class="act-btn del" onclick="event.stopPropagation();delTask(${t.id})" aria-label="Elimina">×</button>
-    </div>
-  </div>`;
+    <button class="act-btn urg" onclick="event.stopPropagation();toggleUrgent(${t.id})" aria-label="Urgente">${urgEmoji}</button>
+    <button class="act-btn" onclick="event.stopPropagation();openEdit(${t.id})" aria-label="Modifica">✎</button>
+    <button class="act-btn del" onclick="event.stopPropagation();delTask(${t.id})" aria-label="Elimina">×</button>
+  </div>
+</div>`;
 }
+
 function renderActive(){
-  if(currentSection==='home') renderTasks();
-  else if(currentSection==='uni') renderCatSection('university','task-list-uni','empty-uni',$('search-uni')?.value||'');
-  else if(currentSection==='credit') renderCatSection('credit','task-list-credit','empty-credit',$('search-credit')?.value||'');
+  if(currentSection==='home')renderTasks();
+  else if(currentSection==='uni')renderCatSection('university','task-list-uni','empty-uni',$('search-uni')?.value||'');
+  else if(currentSection==='credit')renderCatSection('credit','task-list-credit','empty-credit',$('search-credit')?.value||'');
 }
 
 /* ══ SNOOZE ══ */
@@ -1135,15 +1060,23 @@ function clearSnooze(id,e){e?.stopPropagation();snoozeMap.delete(id);renderActiv
 function toggleSnMenu(id,e){e.stopPropagation();const m=$(`sm-${id}`);if(!m)return;const was=m.classList.contains('open');closeSnMenus();if(!was)m.classList.add('open');}
 function closeSnMenus(){document.querySelectorAll('.snooze-menu.open').forEach(m=>m.classList.remove('open'));}
 document.addEventListener('click',closeSnMenus);
+
+// FIX: countdown a 1s invece di 10s
 setInterval(()=>{
   const now=Date.now();let changed=false;
-  snoozeMap.forEach((info,id)=>{if(now>=info.deadline){const t=tasks.find(x=>x.id===id);snoozeMap.delete(id);changed=true;if(t){toast(`⏰ "${t.title}" rimando scaduto`,'warn');sendNotif(`⏰ ${t.title}`,'Rimando scaduto!');}}});
+  snoozeMap.forEach((info,id)=>{
+    if(now>=info.deadline){
+      const t=tasks.find(x=>x.id===id);snoozeMap.delete(id);changed=true;
+      if(t){toast(`⏰ "${t.title}" rimando scaduto`,'warn');sendNotif(`⏰ ${t.title}`,'Rimando scaduto!');}
+    }
+  });
   if(changed)renderActive();
   else document.querySelectorAll('.sn-cd').forEach(el=>{el.textContent=fmtCountdown(Number(el.dataset.id));});
-},10000);
+},1000);
 
-/* ══ DRAG & DROP — FIX: separate handlers for remove ══ */
-let dnd={on:false,id:null,ghost:null,src:null,ox:0,oy:0};
+/* ══ DRAG & DROP ══ */
+let dnd={on:false,id:null,ghost:null,src:null,ox:0,oy:0,lx:0,ly:0};
+
 function startDrag(taskId,e){
   if(e.target?.closest?.('button,.task-check,.snooze-wrap'))return;
   if(e.button!==undefined&&e.button!==0)return;
@@ -1151,42 +1084,63 @@ function startDrag(taskId,e){
   e.preventDefault();e.stopPropagation();
   const card=document.querySelector(`[data-id="${taskId}"]`);if(!card)return;
   const rect=card.getBoundingClientRect();
-  const cx=e.touches?e.touches[0].clientX:e.clientX,cy=e.touches?e.touches[0].clientY:e.clientY;
+  const cx=e.touches?e.touches[0].clientX:e.clientX;
+  const cy=e.touches?e.touches[0].clientY:e.clientY;
   const ghost=card.cloneNode(true);ghost.className='drag-ghost';
   ghost.style.cssText=`width:${rect.width}px;top:${rect.top}px;left:${rect.left}px`;
   ghost.querySelector?.('.task-actions')?.remove();document.body.appendChild(ghost);
   card.classList.add('dragging');
-  dnd={on:true,id:taskId,ghost,src:card,ox:cx-rect.left,oy:cy-rect.top};
+  dnd={on:true,id:taskId,ghost,src:card,ox:cx-rect.left,oy:cy-rect.top,lx:cx,ly:cy};
   document.addEventListener('pointermove',onDragMv,{passive:false});
   document.addEventListener('pointerup',onDragUp);
-  document.addEventListener('pointercancel',onDragUp);
+  document.addEventListener('pointercancel',onDragCancel);
 }
 function onDragMv(e){
   if(!dnd.on)return;e.preventDefault();
+  dnd.lx=e.clientX;dnd.ly=e.clientY;
   dnd.ghost.style.left=(e.clientX-dnd.ox)+'px';dnd.ghost.style.top=(e.clientY-dnd.oy)+'px';
   dnd.ghost.style.pointerEvents='none';
   const el=document.elementFromPoint(e.clientX,e.clientY);dnd.ghost.style.pointerEvents='';
   clearDropInds();if(!el)return;
   const tc=el.closest('.task-card');
-  if(tc&&tc!==dnd.src){const r=tc.getBoundingClientRect();const before=e.clientY<r.top+r.height/2;if(before)showDropBefore(tc);else showDropAfter(tc);tc.dataset.dp=before?'before':'after';tc.dataset.dt='1';}
+  if(tc&&tc!==dnd.src){
+    const r=tc.getBoundingClientRect();const before=e.clientY<r.top+r.height/2;
+    if(before)showDropBefore(tc);else showDropAfter(tc);
+    tc.dataset.dp=before?'before':'after';tc.dataset.dt='1';
+  }
 }
-// FIX: named function so it can be correctly removed
 function onDragUp(e){
   if(!dnd.on)return;
-  document.removeEventListener('pointermove',onDragMv);
-  document.removeEventListener('pointerup',onDragUp);
-  document.removeEventListener('pointercancel',onDragUp);
+  removeDragListeners();
+  // FIX: use stored last position as fallback for pointerup (safe for all pointer types)
+  const cx=e.clientX??dnd.lx,cy=e.clientY??dnd.ly;
   dnd.ghost.style.pointerEvents='none';
-  const el=document.elementFromPoint(e.clientX,e.clientY);
-  if(el){const tc=el.closest('.task-card');
+  const el=document.elementFromPoint(cx,cy);
+  if(el){
+    const tc=el.closest('.task-card');
     if(tc&&tc!==dnd.src){
       if(tc.dataset.dp==='before')moveTaskBefore(dnd.id,Number(tc.dataset.id));
       else{const all=Array.from(document.querySelectorAll('.task-card'));const nc=all[all.indexOf(tc)+1];nc?moveTaskBefore(dnd.id,Number(nc.dataset.id)):moveToEnd(dnd.id);}
       toast('Ordine salvato','info');
     }
   }
-  clearDropInds();dnd.src.classList.remove('dragging');dnd.ghost.remove();
-  dnd={on:false,id:null,ghost:null,src:null,ox:0,oy:0};renderActive();
+  endDrag();
+}
+function onDragCancel(){
+  if(!dnd.on)return;
+  removeDragListeners();endDrag();
+}
+function removeDragListeners(){
+  document.removeEventListener('pointermove',onDragMv);
+  document.removeEventListener('pointerup',onDragUp);
+  document.removeEventListener('pointercancel',onDragCancel);
+}
+function endDrag(){
+  clearDropInds();
+  if(dnd.src)dnd.src.classList.remove('dragging');
+  if(dnd.ghost)dnd.ghost.remove();
+  dnd={on:false,id:null,ghost:null,src:null,ox:0,oy:0,lx:0,ly:0};
+  renderActive();
 }
 function showDropBefore(c){let i=c.previousSibling;if(!i?.classList?.contains('drop-ind')){i=document.createElement('div');i.className='drop-ind';c.parentNode.insertBefore(i,c);}i.classList.add('on');}
 function showDropAfter(c){let i=c.nextSibling;if(!i?.classList?.contains('drop-ind')){i=document.createElement('div');i.className='drop-ind';c.parentNode.insertBefore(i,c.nextSibling);}i.classList.add('on');}
@@ -1195,7 +1149,10 @@ function attachDrag(){
   document.querySelectorAll('.task-card').forEach(card=>{
     const h=card.querySelector('.drag-handle');if(!h)return;
     h.addEventListener('mousedown',e=>startDrag(Number(card.dataset.id),e));
-    h.addEventListener('touchstart',e=>{const t=e.touches[0];startDrag(Number(card.dataset.id),{clientX:t.clientX,clientY:t.clientY,touches:e.touches,preventDefault:()=>e.preventDefault(),stopPropagation:()=>e.stopPropagation(),target:e.target,button:0});},{passive:false});
+    h.addEventListener('touchstart',e=>{
+      const t=e.touches[0];
+      startDrag(Number(card.dataset.id),{clientX:t.clientX,clientY:t.clientY,touches:e.touches,preventDefault:()=>e.preventDefault(),stopPropagation:()=>e.stopPropagation(),target:e.target,button:0});
+    },{passive:false});
   });
 }
 
@@ -1204,23 +1161,16 @@ function toggleDone(id){
   const t=tasks.find(x=>x.id===id);if(!t)return;
   t.done=!t.done;
   if(t.done){
-    snoozeMap.delete(id);
-    t.doneAt=Date.now();
-    // FIX: animate card fade-out, then schedule removal
+    snoozeMap.delete(id);t.doneAt=Date.now();
     const card=document.querySelector(`[data-id="${id}"]`);
-    if(card&&CFG.autoDelOn&&CFG.autoDelSecs>0) setTimeout(()=>{card?.classList.add('fading-out');},100);
+    if(card&&CFG.autoDelOn&&CFG.autoDelSecs>0)setTimeout(()=>{card?.classList.add('fading-out');},100);
     toast(`✓ "${t.title}" completato!`,'ok',()=>{
-      // undo: cancel auto-del, un-complete
-      cancelAutoDel(id);
-      t.done=false;delete t.doneAt;
-      save();renderActive();
+      cancelAutoDel(id);t.done=false;delete t.doneAt;save();renderActive();
     });
     scheduleAutoDel(id);
     if(tasks.every(x=>x.done)&&tasks.length)spawnConfetti();
-  } else {
-    // un-complete: cancel any pending auto-del
-    cancelAutoDel(id);
-    delete t.doneAt;
+  }else{
+    cancelAutoDel(id);delete t.doneAt;
   }
   if(CFG.vib&&navigator.vibrate)navigator.vibrate(t.done?[30,10,20]:10);
   save();renderActive();
@@ -1251,6 +1201,9 @@ function openModal(pre={}){
   $('f-label').value=pre.label??'';$('f-note').value=pre.note??'';
   $('f-title').style.borderColor='';
   $('del-btn').style.display=editingId?'flex':'none';
+  // Mostra template strip solo su nuova task
+  const strip=$('tpl-strip-modal');
+  if(strip)strip.style.display=editingId?'none':'flex';
   selCat(pre.cat??activeCat);
   $('modal').classList.add('open');
   setTimeout(()=>$('f-title').focus(),80);
@@ -1276,7 +1229,7 @@ function tpl(title,note,cat,priority){openModal({title,note,cat,priority});}
 /* ══ POMODORO ══ */
 const POMO_MODES={work:{label:'Lavoro',secs:25*60,color:'#f97316'},short:{label:'Pausa Breve',secs:5*60,color:'#7ee8a2'},long:{label:'Pausa Lunga',secs:15*60,color:'#6c9fff'}};
 const POMO_ORDER=['work','short','long'];
-const POMO_R=2*Math.PI*92; // circumference for r=92
+const POMO_R=2*Math.PI*92;
 let pomoMode='work',pomoSecs=25*60,pomoRunning=false,pomoInterval=null;
 const pomoSt=()=>JSON.parse(localStorage.getItem('roman-pomo-v3')||'{"today":0,"total":0,"streak":0,"lastDate":""}');
 const savePomoSt=st=>localStorage.setItem('roman-pomo-v3',JSON.stringify(st));
@@ -1304,13 +1257,14 @@ function onPomoComplete(){
   beep();if(CFG.vib&&navigator.vibrate)navigator.vibrate([100,50,100,50,100]);
   if(pomoMode==='work'){
     const st=pomoSt(),today=todayStr();
+    const yesterday=(()=>{const y=new Date();y.setDate(y.getDate()-1);return`${y.getFullYear()}-${pad2(y.getMonth()+1)}-${pad2(y.getDate())}`;})();
     st.today=st.lastDate===today?(st.today||0)+1:1;
     st.total=(st.total||0)+1;
-    st.streak=(st.lastDate===today||(()=>{const y=new Date();y.setDate(y.getDate()-1);const ys=`${y.getFullYear()}-${pad2(y.getMonth()+1)}-${pad2(y.getDate())}`;return st.lastDate===ys;})())?(st.streak||0)+1:1;
+    st.streak=(st.lastDate===today||st.lastDate===yesterday)?(st.streak||0)+1:1;
     st.lastDate=today;savePomoSt(st);renderPomoStats();
     toast('🍅 Pomodoro completato!','ok');sendNotif('🍅 Pomodoro!','Ottimo! Prenditi una pausa.');
     updateBadges();setTimeout(()=>setPomoMode('short'),500);
-  } else {
+  }else{
     toast('☕ Pausa finita!','info');sendNotif('☕ Pausa finita!','Pronto a riprendere?');
     setTimeout(()=>setPomoMode('work'),500);
   }
@@ -1334,7 +1288,8 @@ let audioCtx=null;
 function getACtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
 function beep(){
   if(!CFG.sound)return;
-  try{const ctx=getACtx(),g=ctx.createGain();g.connect(ctx.destination);
+  try{
+    const ctx=getACtx(),g=ctx.createGain();g.connect(ctx.destination);
     [0,.35,.7].forEach(t=>{const o=ctx.createOscillator();o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(.3,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+.3);o.connect(g);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+.35);});
   }catch(e){}
 }
@@ -1368,8 +1323,7 @@ function renderSettingsUI(){
   $('hsl-s').value=CFG.accentS;$('hsl-s-v').textContent=CFG.accentS+'%';
   $('hsl-l').value=CFG.accentL;$('hsl-l-v').textContent=CFG.accentL+'%';
   $('tog-notif').checked=CFG.notif||notifEnabled;
-  $('tog-sound').checked=CFG.sound;
-  $('tog-vib').checked=CFG.vib;
+  $('tog-sound').checked=CFG.sound;$('tog-vib').checked=CFG.vib;
   $('tog-autodel').checked=CFG.autoDelOn;
   $('autodel-secs').value=CFG.autoDelSecs;
   $('autodel-val').textContent=CFG.autoDelSecs===0?'Istantaneo':CFG.autoDelSecs+' sec';
@@ -1402,13 +1356,23 @@ function importJSON(){$('import-file').click();}
 function handleImport(e){
   const file=e.target.files[0];if(!file)return;
   const r=new FileReader();
-  r.onload=ev=>{try{const data=JSON.parse(ev.target.result);if(data.tasks&&Array.isArray(data.tasks)){if(!confirm(`Importare ${data.tasks.length} task?`))return;tasks=data.tasks;if(data.order)taskOrder=new Map(Object.entries(data.order).map(([k,v])=>[Number(k),v]));syncOrder();save();renderActive();toast(`📥 Importate ${tasks.length} task!`,'ok');}}catch{toast('Errore parsing JSON','warn');}};
+  r.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      if(data.tasks&&Array.isArray(data.tasks)){
+        if(!confirm(`Importare ${data.tasks.length} task?`))return;
+        tasks=data.tasks;
+        if(data.order)taskOrder=new Map(Object.entries(data.order).map(([k,v])=>[Number(k),v]));
+        syncOrder();save();renderActive();toast(`📥 Importate ${tasks.length} task!`,'ok');
+      }
+    }catch{toast('Errore parsing JSON','warn');}
+  };
   r.readAsText(file);e.target.value='';
 }
 function exportPDF(){
   const od=tasks.filter(isOverdue);if(!od.length){toast('Nessun task scaduto','info');return;}
   const w=window.open('','_blank');
-  w.document.write(`<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"/><title>Scaduti Roman</title><style>body{font-family:monospace;padding:24px;color:#111}h1{font-size:18px;margin-bottom:16px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px}th{background:#f5f5f5}.urg{color:#c0392b;font-weight:700}</style></head><body><h1>📋 Task Scadute — ${new Date().toLocaleDateString('it-IT')}</h1><table><thead><tr><th>Titolo</th><th>Cat.</th><th>Scadenza</th><th>Priorità</th><th>Note</th></tr></thead><tbody>${od.map(t=>`<tr class="${t.priority==='high'?'urg':''}"><td>${esc(t.title)}</td><td>${CAT_LABELS[t.cat]}</td><td>${fmtDate(t.date)}</td><td>${t.priority}</td><td>${esc(t.note||'')}</td></tr>`).join('')}</tbody></table></body></html>`);
+  w.document.write(`<!DOCTYPE html><html lang="it"><head><meta charset="UTF-8"/><title>Scaduti Roman</title><style>body{font-family:monospace;padding:24px;color:#111}h1{font-size:18px;margin-bottom:16px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:8px;text-align:left;font-size:12px}th{background:#f5f5f5}.urg{color:#c0392b;font-weight:700}</style></head><body><h1>📋 Task Scadute — ${new Date().toLocaleDateString('it-IT')}</h1><table><thead><tr><th>Titolo</th><th>Cat.</th><th>Scadenza</th><th>Priorità</th><th>Note</th></tr></thead><tbody>${od.map(t=>`<tr class="${t.priority==='high'?'urg':''}"><td>${esc(t.title)}</td><td>${CAT_LABELS_FULL[t.cat]||t.cat}</td><td>${fmtDate(t.date)}</td><td>${t.priority}</td><td>${esc(t.note||'')}</td></tr>`).join('')}</tbody></table></body></html>`);
   w.document.close();setTimeout(()=>w.print(),400);
 }
 
@@ -1485,7 +1449,7 @@ function setupSwipe(){
   },{passive:true});
 }
 
-/* ══ SEED ══ */
+/* ══ SEED DATA ══ */
 if(!tasks.length){
   const d=n=>{const dt=new Date();dt.setDate(dt.getDate()+n);return`${dt.getFullYear()}-${pad2(dt.getMonth()+1)}-${pad2(dt.getDate())}`;};
   tasks=[

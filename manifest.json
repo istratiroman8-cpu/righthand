@@ -1,20 +1,42 @@
 {
   "name": "Roman — Task Manager",
   "short_name": "Roman",
-  "description": "Task manager PWA per studenti di sociologia e mediatori creditizi",
+  "description": "Task Manager per sociologia Sapienza e mediatori creditizi",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0e0f13",
   "theme_color": "#0e0f13",
-  "orientation": "any",
-  "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
-  ],
-  "categories": ["productivity", "education"],
+  "orientation": "portrait-primary",
   "lang": "it",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "utilities"],
   "shortcuts": [
-    { "name": "Nuova Task", "url": "./?action=new", "description": "Crea una nuova task" },
-    { "name": "Pomodoro", "url": "./?section=pomo", "description": "Avvia timer Pomodoro" }
+    {
+      "name": "Nuova Task",
+      "short_name": "Task",
+      "description": "Aggiungi una nuova task",
+      "url": "./?action=new",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Pomodoro",
+      "short_name": "Pomo",
+      "description": "Apri il timer Pomodoro",
+      "url": "./?section=pomo",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
   ]
 }
