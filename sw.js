@@ -1,9 +1,12 @@
-// Roman SW v3.2 — 25/04/2026
-const CACHE = 'roman-v3.2';
+// Roman SW v3.3 — 25/04/2026
+const CACHE = 'roman-v3.3';
 const ASSETS = [
   '/',
   '/index.html',
-  'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;700;800&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap',
+  '/icon-192.png',
+  '/icon-light-192.png',
+  '/apple-touch-icon.png',
+  '/apple-touch-icon-light.png',
 ];
 
 self.addEventListener('install', e => {
