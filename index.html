@@ -1,4 +1,4 @@
-<!-- Roman PWA v3.3 — 25/04/2026 — icon switcher + stability audit -->
+<!-- Roman PWA v3.4 — 25/04/2026 — layout cleanup + stability -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -219,7 +219,7 @@ body::before{
   position:relative;z-index:100;
 }
 [data-theme=light] .section-header{background:rgba(242,243,247,.92)}
-.section-title{font-family:var(--sans);font-size:16px;font-weight:800;flex:1}
+.section-title{font-family:var(--sans);font-size:16px;font-weight:800;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .icon-btn{
   width:36px;height:36px;border-radius:var(--radius-sm);
   border:1px solid var(--border);background:var(--surface);cursor:pointer;
@@ -250,31 +250,21 @@ body::before{
 .scroll-area::-webkit-scrollbar-track{background:transparent}
 .scroll-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
 
-/* ══ STATS / TOOLBAR / CHIPS ══ */
-.stats-row{display:flex;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;scrollbar-width:none}
-.stats-row::-webkit-scrollbar{display:none}
-.stat-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;background:var(--surface);border:1px solid var(--border);border-radius:20px;flex-shrink:0}
-.stat-n{font-family:var(--sans);font-size:14px;font-weight:800}
-.stat-l{font-size:9px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase}
+/* ══ HEADER STATS (inline in header) ══ */
+.hdr-stats{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.hdr-stat{display:flex;align-items:center;gap:3px;padding:3px 8px;background:var(--surface2);border:1px solid var(--border);border-radius:20px;cursor:default}
+.hdr-stat-n{font-family:var(--sans);font-size:12px;font-weight:800;line-height:1}
+.hdr-stat-l{font-size:9px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase}
+.hdr-stat.od .hdr-stat-n{color:var(--accent-urgent)}
+.hdr-stat.done-s .hdr-stat-n{color:var(--accent-personal)}
+/* ══ TOOLBAR ══ */
 .toolbar{display:flex;align-items:center;gap:7px;padding:7px 14px;border-bottom:1px solid var(--border);flex-shrink:0}
 .search-box{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 10px;flex:1;min-width:0;transition:border-color .14s}
 .search-box:focus-within{border-color:var(--text-muted)}
 .search-box input{background:none;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:14px;width:100%;-webkit-user-select:text;user-select:text}
 .search-box input::placeholder{color:var(--text-muted);font-size:12px}
 .sort-sel{background:var(--surface);border:1px solid var(--border);color:var(--text-dim);font-family:var(--mono);font-size:11px;padding:5px 7px;border-radius:var(--radius-sm);cursor:pointer;outline:none;flex-shrink:0}
-.chip-row{display:flex;gap:5px;padding:7px 14px;border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;scrollbar-width:none;align-items:center}
-.chip-row::-webkit-scrollbar{display:none}
-.chip{padding:5px 11px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:var(--mono);transition:all .13s;white-space:nowrap;flex-shrink:0;min-height:30px;display:flex;align-items:center}
-.chip:active{opacity:.7}
-.chip.on{background:var(--surface2);color:var(--text);border-color:var(--text-dim)}
-.chip.ph.on{border-color:rgba(255,107,107,.5);color:var(--accent-urgent);background:rgba(255,107,107,.07)}
-.chip.pm.on{border-color:rgba(244,169,78,.5);color:var(--accent-credit);background:rgba(244,169,78,.07)}
-.chip.pl.on{border-color:var(--text-muted);color:var(--text-dim)}
-.chip-sep{width:1px;height:14px;background:var(--border);margin:0 2px;flex-shrink:0}
-.tpl-strip{display:flex;gap:5px;padding:7px 14px;border-bottom:1px solid var(--border);overflow-x:auto;flex-shrink:0;scrollbar-width:none}
-.tpl-strip::-webkit-scrollbar{display:none}
-.tpl-btn{padding:5px 11px;border:1px dashed var(--border);border-radius:var(--radius-sm);font-size:11px;color:var(--text-muted);cursor:pointer;background:none;font-family:var(--mono);white-space:nowrap;flex-shrink:0;transition:all .13s;min-height:30px}
-.tpl-btn:active{background:var(--surface);border-color:var(--text-muted);color:var(--text)}
+
 
 /* ══ TASK AREA ══ */
 .task-area{padding:10px 14px}
@@ -688,18 +678,16 @@ input[type=range]{flex:1;accent-color:var(--accent);height:24px}
 <!-- ══ HOME ══ -->
 <section class="section active" id="sec-home" aria-label="Tutte le task">
   <header class="section-header">
-    <h1 class="section-title" id="view-title">Tutte le task</h1>
+    <h1 class="section-title" id="view-title">Roman</h1>
+    <div class="hdr-stats" id="hdr-stats" aria-label="Statistiche">
+      <div class="hdr-stat done-s"><span class="hdr-stat-n" id="st-done">0</span><span class="hdr-stat-l">✓</span></div>
+      <div class="hdr-stat od"><span class="hdr-stat-n" id="st-od">0</span><span class="hdr-stat-l">scad</span></div>
+    </div>
     <button class="icon-btn" id="notif-btn" onclick="toggleNotif()" title="Notifiche" aria-label="Notifiche">
       <span class="ms" style="font-size:18px">notifications</span>
       <span class="notif-dot" id="notif-dot"></span>
     </button>
   </header>
-  <div class="stats-row" role="group" aria-label="Statistiche">
-    <div class="stat-pill"><span class="stat-n" id="st-total" style="color:var(--accent)">0</span><span class="stat-l">Tot</span></div>
-    <div class="stat-pill"><span class="stat-n" id="st-today" style="color:var(--accent-credit)">0</span><span class="stat-l">Oggi</span></div>
-    <div class="stat-pill"><span class="stat-n" id="st-done" style="color:var(--accent-personal)">0</span><span class="stat-l">Fatti</span></div>
-    <div class="stat-pill"><span class="stat-n" id="st-od" style="color:var(--accent-urgent)">0</span><span class="stat-l">Scad</span></div>
-  </div>
   <div class="toolbar">
     <div class="search-box" role="search">
       <span class="ms" style="font-size:17px;color:var(--text-muted)">search</span>
@@ -713,29 +701,9 @@ input[type=range]{flex:1;accent-color:var(--accent);height:24px}
       <option value="created">🕐 Crea.</option>
     </select>
   </div>
-  <div class="chip-row" role="toolbar" aria-label="Filtri">
-    <button class="chip on" data-prio="all" onclick="setFilter('all',this)">Tutte</button>
-    <button class="chip ph" data-prio="high" onclick="setFilter('high',this)">🔴 Alta</button>
-    <button class="chip pm" data-prio="medium" onclick="setFilter('medium',this)">🟡 Media</button>
-    <button class="chip pl" data-prio="low" onclick="setFilter('low',this)">⚪ Bassa</button>
-    <span class="chip-sep"></span>
-    <button class="chip" id="chip-inc" onclick="toggleInc(this)">Da fare</button>
-    <button class="chip" id="chip-od" onclick="toggleOd(this)">Scaduti</button>
-    <button class="chip" id="chip-sn" onclick="toggleSn(this)">Rimandati</button>
-  </div>
-  <div class="tpl-strip" aria-label="Template rapidi">
-    <button class="tpl-btn" onclick="tpl('Preparazione esame','Ripassare schemi, domande tipo, appunti','university','high')">📚 Prep esame</button>
-    <button class="tpl-btn" onclick="tpl('Analisi pratica cliente','DSR / PTI / LTV / merito creditizio','credit','high')">📋 Analisi pratica</button>
-    <button class="tpl-btn" onclick="tpl('Sessione Pomodoro','4 cicli × 25 min','university','medium')">⏱ Pomodoro</button>
-    <button class="tpl-btn" onclick="tpl('Follow-up cliente','Aggiornamento pratica mutuo','credit','medium')">📞 Follow-up</button>
-    <button class="tpl-btn" onclick="tpl('Ricerca accademica','Google Scholar / JSTOR / SocINDEX','university','medium')">🔍 Ricerca</button>
-    <button class="tpl-btn" onclick="tpl('Invio documentazione','CU, buste paga 3 mesi, estratto conto 6 mesi','credit','high')">📤 Docs</button>
-    <button class="tpl-btn" onclick="tpl('Calcoli LTV/DSR','Reddito netto, rate esistenti, LTV perizia','credit','medium')">🧮 LTV/DSR</button>
-    <button class="tpl-btn" onclick="tpl('Workout','','personal','low')">🏋️ Gym</button>
-  </div>
   <div class="scroll-area">
     <div class="task-area">
-      <div class="empty" id="empty-home" style="display:none"><span class="ms">task_alt</span><span>Nessuna task in questa vista.</span></div>
+      <div class="empty" id="empty-home" style="display:none"><span class="ms">task_alt</span><span>Nessuna task. Aggiungine una!</span></div>
       <div id="task-list" role="list"></div>
     </div>
   </div>
@@ -909,8 +877,8 @@ input[type=range]{flex:1;accent-color:var(--accent);height:24px}
       <div class="settings-s" style="margin-bottom:60px">
         <div class="settings-lbl">Info</div>
         <div style="font-size:12px;color:var(--text-muted);line-height:1.8">
-          Roman Task Manager <strong style="color:var(--text)">v3.3</strong><br/>
-          Build: 25/04/2026 · PWA Standalone · iOS Optimized<br/>
+          Roman Task Manager <strong style="color:var(--text)">v3.4</strong><br/>
+          Build: 25/04/2026 · PWA · iOS Native · Stability<br/>
           Ottimizzato per sociologia Sapienza + mediatori creditizi<br/>
           <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:10px">Ctrl+1-4</kbd> cambio sezione ·
           <kbd style="background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:10px">Ctrl+N</kbd> nuova task
@@ -1079,13 +1047,11 @@ let tasks=(()=>{
 let taskOrder=new Map(Object.entries(JSON.parse(localStorage.getItem('roman-order-v3')||'{}')).map(([k,v])=>[Number(k),v]));
 const snoozeMap=new Map();
 const autoDelTimers=new Map();
-let currentFilter='all',filterInc=false,filterOd=false,filterSn=false;
 let editingId=null,activeCat='university';
 let notifEnabled=CFG.notif;
 let kbIdx=-1,_rt=null;
 
 const CAT_LABELS={university:'🎓 Università',credit:'💼 Credito',personal:'🏠 Personale',urgent:'🔥 Urgente'};
-const isToday=t=>t.date===todayStr();
 const isOverdue=t=>!t.done&&!!t.date&&t.date<todayStr();
 const isSnoozed=t=>snoozeMap.has(t.id);
 
@@ -1224,12 +1190,8 @@ function updateBadges(){
 /* ══ FILTER/SORT ══ */
 function getFiltered(){
   let t=[...tasks];
-  if(filterOd) t=t.filter(isOverdue);
-  else if(filterSn) t=t.filter(isSnoozed);
-  if(currentFilter!=='all') t=t.filter(x=>x.priority===currentFilter);
-  if(filterInc) t=t.filter(x=>!x.done);
   const q=($('search-in')?.value||'').toLowerCase().trim();
-  if(q) t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q)));
+  if(q)t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q)));
   const sort=$('sort-sel')?.value||'manual';
   const pR={high:0,medium:1,low:2};
   switch(sort){
@@ -1240,22 +1202,21 @@ function getFiltered(){
     default:         return t.sort((a,b)=>b.id-a.id);
   }
 }
-function setFilter(p,el){currentFilter=p;document.querySelectorAll('.chip[data-prio]').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderTasks();}
-function toggleInc(el){filterInc=!filterInc;el.classList.toggle('on',filterInc);renderTasks();}
-function toggleOd(el){filterOd=!filterOd;if(filterOd)filterSn=false;$('chip-sn').classList.remove('on');el.classList.toggle('on',filterOd);renderTasks();}
-function toggleSn(el){filterSn=!filterSn;if(filterSn)filterOd=false;$('chip-od').classList.remove('on');el.classList.toggle('on',filterSn);renderTasks();}
 const debouncedRender=()=>{clearTimeout(_rt);_rt=setTimeout(renderTasks,120);};
 
 /* ══ RENDER ══ */
 function renderTasks(){
   const list=$('task-list'),emptyEl=$('empty-home');
+  if(!list||!emptyEl)return;
   const filtered=getFiltered();
-  const total=tasks.length,done=tasks.filter(x=>x.done).length;
-  const todayCnt=tasks.filter(isToday).length,odCnt=tasks.filter(isOverdue).length;
-  $('st-total').textContent=total;$('st-today').textContent=todayCnt;
-  $('st-done').textContent=done;$('st-od').textContent=odCnt;
-  $('notif-dot').style.display=odCnt>0?'block':'none';
-  $('notif-btn').classList.toggle('active-alert',odCnt>0);
+  const done=tasks.filter(x=>x.done).length;
+  const odCnt=tasks.filter(isOverdue).length;
+  const stDone=$('st-done'),stOd=$('st-od');
+  if(stDone)stDone.textContent=done;
+  if(stOd)stOd.textContent=odCnt;
+  const notifDot=$('notif-dot'),notifBtn=$('notif-btn');
+  if(notifDot)notifDot.style.display=odCnt>0?'block':'none';
+  if(notifBtn)notifBtn.classList.toggle('active-alert',odCnt>0);
   if(!filtered.length){list.innerHTML='';emptyEl.style.display='flex';updateBadges();return;}
   emptyEl.style.display='none';
   const pending=filtered.filter(x=>!x.done),completed=filtered.filter(x=>x.done);
@@ -1266,9 +1227,11 @@ function renderTasks(){
   attachDrag();updateBadges();
 }
 function renderCatSection(cat,listId,emptyId,q){
-  let t=tasks.filter(x=>x.cat===cat);
-  if(q)t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(q.toLowerCase())));
   const list=$(listId),emptyEl=$(emptyId);
+  if(!list||!emptyEl)return;
+  const sq=(q||'').toLowerCase();
+  let t=tasks.filter(x=>x.cat===cat);
+  if(sq)t=t.filter(x=>[x.title,x.note,x.subtitle,x.label].some(s=>(s??'').toLowerCase().includes(sq)));
   if(!t.length){list.innerHTML='';emptyEl.style.display='flex';return;}
   emptyEl.style.display='none';
   const pending=t.filter(x=>!x.done),done=t.filter(x=>x.done);
@@ -1337,8 +1300,13 @@ function fmtCountdown(id){
 function snooze(id,mins,e){e?.stopPropagation();snoozeMap.set(id,{deadline:Date.now()+mins*60000});closeSnMenus();renderActive();toast(`⏳ Rimandato di ${mins} min`,'sn');}
 function clearSnooze(id,e){e?.stopPropagation();snoozeMap.delete(id);renderActive();toast('Rimando rimosso','info');}
 function toggleSnMenu(id,e){e.stopPropagation();const m=$(`sm-${id}`);if(!m)return;const was=m.classList.contains('open');closeSnMenus();if(!was)m.classList.add('open');}
-function closeSnMenus(){document.querySelectorAll('.snooze-menu.open').forEach(m=>m.classList.remove('open'));}
+function closeSnMenus(){
+  try{document.querySelectorAll('.snooze-menu.open').forEach(m=>m.classList.remove('open'));}catch(_){}
+}
 document.addEventListener('click',closeSnMenus);
+document.addEventListener('touchstart',e=>{
+  if(!e.target.closest('.snooze-wrap'))closeSnMenus();
+},{passive:true});
 // Snooze countdown — 10s tick, guards against stale DOM
 setInterval(()=>{
   const now=Date.now();let changed=false;
@@ -1389,17 +1357,27 @@ function onDragUp(e){
   document.removeEventListener('pointermove',onDragMv);
   document.removeEventListener('pointerup',onDragUp);
   document.removeEventListener('pointercancel',onDragUp);
-  dnd.ghost.style.pointerEvents='none';
-  const el=document.elementFromPoint(e.clientX,e.clientY);
-  if(el){const tc=el.closest('.task-card');
-    if(tc&&tc!==dnd.src){
-      if(tc.dataset.dp==='before')moveTaskBefore(dnd.id,Number(tc.dataset.id));
-      else{const all=Array.from(document.querySelectorAll('.task-card'));const nc=all[all.indexOf(tc)+1];nc?moveTaskBefore(dnd.id,Number(nc.dataset.id)):moveToEnd(dnd.id);}
-      toast('Ordine salvato','info');
+  try{
+    if(dnd.ghost)dnd.ghost.style.pointerEvents='none';
+    const el=e.clientX!=null?document.elementFromPoint(e.clientX,e.clientY):null;
+    if(el){
+      const tc=el.closest('.task-card');
+      if(tc&&tc!==dnd.src){
+        if(tc.dataset.dp==='before')moveTaskBefore(dnd.id,Number(tc.dataset.id));
+        else{
+          const all=Array.from(document.querySelectorAll('.task-card'));
+          const nc=all[all.indexOf(tc)+1];
+          nc?moveTaskBefore(dnd.id,Number(nc.dataset.id)):moveToEnd(dnd.id);
+        }
+        toast('Ordine salvato','info');
+      }
     }
-  }
-  clearDropInds();dnd.src.classList.remove('dragging');dnd.ghost.remove();
-  dnd={on:false,id:null,ghost:null,src:null,ox:0,oy:0};renderActive();
+  }catch(_){}
+  clearDropInds();
+  if(dnd.src)dnd.src.classList.remove('dragging');
+  if(dnd.ghost&&dnd.ghost.parentNode)dnd.ghost.remove();
+  dnd={on:false,id:null,ghost:null,src:null,ox:0,oy:0};
+  renderActive();
 }
 function showDropBefore(c){let i=c.previousSibling;if(!i?.classList?.contains('drop-ind')){i=document.createElement('div');i.className='drop-ind';c.parentNode.insertBefore(i,c);}i.classList.add('on');}
 function showDropAfter(c){let i=c.nextSibling;if(!i?.classList?.contains('drop-ind')){i=document.createElement('div');i.className='drop-ind';c.parentNode.insertBefore(i,c.nextSibling);}i.classList.add('on');}
@@ -1748,27 +1726,23 @@ function setupKB(){
   });
 }
 
-/* ══ SWIPE — FIX: only horizontal swipe, don't block vertical scroll ══ */
+/* ══ SWIPE — horizontal only, ignores scroll areas ══ */
 function setupSwipe(){
   const SECS=['home','uni','credit','pomo'];
-  let sx=0,sy=0,sTime=0,isSwipe=false;
+  let sx=0,sy=0,sTime=0,sEl=null;
   document.addEventListener('touchstart',e=>{
     if(e.touches.length!==1)return;
-    sx=e.touches[0].clientX;sy=e.touches[0].clientY;sTime=Date.now();isSwipe=false;
-  },{passive:true});
-  document.addEventListener('touchmove',e=>{
-    if(e.touches.length!==1||isSwipe)return;
-    const dx=Math.abs(e.touches[0].clientX-sx),dy=Math.abs(e.touches[0].clientY-sy);
-    // Only mark as horizontal swipe if clearly more horizontal than vertical
-    if(dx>12&&dx>dy*2)isSwipe=true;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;
+    sTime=Date.now();sEl=e.target;
   },{passive:true});
   document.addEventListener('touchend',e=>{
-    if(!isSwipe)return;
     if($('modal').classList.contains('open')||$('drawer').classList.contains('open'))return;
+    // Don't swipe if touch started inside a scroll-area (could be vertical scroll)
+    if(sEl?.closest('.scroll-area,.modal,.snooze-menu,.calc-panel'))return;
     const dx=e.changedTouches[0].clientX-sx;
+    const dy=Math.abs(e.changedTouches[0].clientY-sy);
     const dt=Date.now()-sTime;
-    // Must be fast (< 350ms) and long enough (> 60px)
-    if(dt>350||Math.abs(dx)<60)return;
+    if(dt>380||Math.abs(dx)<65||Math.abs(dx)<dy*1.8)return;
     const cur=SECS.indexOf(currentSection);
     if(dx<0&&cur<SECS.length-1)goSection(SECS[cur+1]);
     else if(dx>0&&cur>0)goSection(SECS[cur-1]);

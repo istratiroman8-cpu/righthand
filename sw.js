@@ -1,5 +1,5 @@
-// Roman SW v3.3 — 25/04/2026
-const CACHE = 'roman-v3.3';
+// Roman SW v3.4 — 25/04/2026
+const CACHE = 'roman-v3.4';
 const ASSETS = [
   '/',
   '/index.html',
